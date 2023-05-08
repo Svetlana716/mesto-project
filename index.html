@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mesto</title>
+  <link rel="stylesheet" href="pages/index.css">
+</head>
+
+<body class="page">
+  <div class="container">
+    <header class="header">
+      <img class="header__logo" src="./images/logo.svg" alt="логотип">
+    </header>
+    <main class="content wrapper">
+      <section class="profile">
+        <img class="profile__avatar" src="./images/avatar.jpg" alt="аватар пользователя">
+        <div class="profile__info">
+          <h1 class="profile__user-name">Жак-Ив Кусто</h1>
+          <button class="profile__edit-button"></button>
+          <p class="profile__description">Исследователь океана</p>
+        </div>
+        <button class="profile__add-button"></button>
+      </section>
+      <section class="cards">
+        <ul class="cards__list">
+          <li class="card">
+            <img class="card__image" src="./images/karakachevsk.jpg" alt="">
+            <div class="card__group">
+              <h2 class="card__title">Карачаевск</h2>
+              <button class="card__like"></button>
+            </div>
+          </li>
+          <li class="card">
+            <img class="card__image" src="./images/elbrus.jpg" alt="">
+            <div class="card__group">
+              <h2 class="card__title">Гора Эльбрус</h2>
+              <button class="card__like"></button>
+            </div>
+          </li>
+          <li class="card">
+            <img class="card__image" src="./images/bombai.jpg" alt="">
+            <div class="card__group">
+              <h2 class="card__title">Домбай</h2>
+              <button class="card__like"></button>
+            </div>
+          </li>
+          <li class="card">
+            <img class="card__image" src="./images/elbrus.jpg" alt="">
+            <div class="card__group">
+              <h2 class="card__title">Гора Эльбрус</h2>
+              <button class="card__like"></button>
+            </div>
+          </li>
+          <li class="card">
+            <img class="card__image" src="./images/bombai.jpg" alt="">
+            <div class="card__group">
+              <h2 class="card__title">Домбай</h2>
+              <button class="card__like"></button>
+            </div>
+          </li>
+          <li class="card">
+            <img class="card__image" src="./images/karakachevsk.jpg" alt="">
+            <div class="card__group">
+              <h2 class="card__title">Карачаево-Черкессия</h2>
+              <button class="card__like"></button>
+            </div>
+          </li>
+        </ul>
+      </section>
+    </main>
+    <footer class="footer wrapper">© 2020 Mesto Russia</footer>
+  </div>
+  <section class="popup">
+    <div class="popup__container">
+      <button class="popup__close-button"></button>
+      <form class="form" action="">
+        <h2 class="form__heading">Редактировать&nbsp;профиль</h2>
+        <fieldset class="form__input-container">
+          <input class="form__item" type="text" name="user-name" value="Жак-Ив Кусто" required>
+          <input class="form__item" type="text" name="description" value="Исследователь океана" required>
+        </fieldset>
+        <button class="form__submit-button" type="submit" value="Сохранить">Сохранить</button>
+      </form>
+    </div>
+  </section>
+</body>
+
+</html>

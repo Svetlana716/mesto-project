@@ -1,0 +1,20 @@
+.footer {
+  padding: 67px 0 60px;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.2;
+  color: #545454;
+}
+
+@media screen and (max-width: 1024px) {
+  .footer {
+    font-size: calc(14px + (18 - 14) * ((100vw - 320px) / (1024 - 320)));
+  }
+}
+
+@media screen and (max-width: 601px) {
+  .footer {
+    font-size: 14px;
+    padding-top: 50px;
+  }
+}

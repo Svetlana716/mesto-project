@@ -1,0 +1,19 @@
+.profile__description {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.2;
+  margin: 0;
+  grid-column: span 2;
+}
+
+@media screen and (max-width: 1024px) {
+  .profile__description {
+    font-size: calc(14px + (18 - 14) * ((100vw - 320px) / (1024 - 320)));
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .profile__description {
+    font-size: 14px;
+  }
+}
