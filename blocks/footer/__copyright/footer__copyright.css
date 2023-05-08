@@ -1,24 +1,18 @@
-.profile__description {
+.footer__copyright {
   font-weight: 400;
   font-size: 18px;
   line-height: 1.2;
-  margin: 0;
-  grid-area: description;
-  max-width: 336px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
+  color: #545454;
 }
 
 @media screen and (max-width: 1024px) {
-  .profile__description {
+  .footer__copyright {
     font-size: calc(14px + (18 - 14) * ((100vw - 320px) / (1024 - 320)));
   }
 }
 
 @media screen and (max-width: 601px) {
-  .profile__description {
+  .footer__copyright {
     font-size: 14px;
-    max-width: 282px;
   }
 }

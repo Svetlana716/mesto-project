@@ -1,14 +1,21 @@
 .profile__info {
+  max-width: 336px;
   display: grid;
-  grid-template: repeat(2, auto) / 1fr 24px;
-  gap: 7px 18px;
+  grid-template-columns: fit-content(294px) auto;
+  grid-template-areas:
+    'user-name edit-button'
+    'description description';
+  gap: 9px 19px;
   align-items: center;
+  justify-content: center;
+  margin-right: 10px;
 }
 
 @media screen and (max-width: 601px) {
   .profile__info {
-    grid-template: repeat(2, auto) / 1fr 18px;
-    margin-bottom: 34px;
+    max-width: 282px;
+    grid-template-columns: fit-content(189px) auto;
+    margin-bottom: 31px;
     text-align: center;
     justify-items: center;
     column-gap: 10px;

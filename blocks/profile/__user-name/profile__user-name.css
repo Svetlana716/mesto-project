@@ -3,6 +3,11 @@
   font-size: 42px;
   line-height: 1.1;
   margin: 0;
+  grid-area: user-name;
+  max-width: 294px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 @media screen and (max-width: 1024px) {
@@ -11,8 +16,9 @@
   }
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 601px) {
   .profile__user-name {
+    max-width: 189px;
     font-size: 27px;
     line-height: 1.2;
   }
