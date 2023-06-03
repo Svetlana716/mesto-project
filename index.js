@@ -2,7 +2,6 @@ const container = document.querySelector('.container');
 const popup = document.querySelector('.popup');
 const editButton = container.querySelector('.profile__edit-button');
 const closeButton = popup.querySelector('.popup__close-button');
-const submitButton = popup.querySelector('.form__submit-button');
 const addButton = container.querySelector('.profile__add-button');
 
 function openPopup(evt) {
@@ -21,9 +20,12 @@ function closePopup(evt) {
 
 closeButton.addEventListener('click', closePopup);
 
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
 const formElement = popup.querySelector('.form');
 const inputName = formElement.querySelector('.form__item_el_user-name');
 const inputDescription = formElement.querySelector('.form__item_el_description');
+const submitButton = popup.querySelector('.form__submit-button');
 
 function handleFormSubmit(evt) {
 evt.preventDefault();
@@ -38,6 +40,8 @@ closePopup(evt)
 };
 
 formElement.addEventListener('submit', handleFormSubmit);
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 const initialCards = [
   {
@@ -76,3 +80,13 @@ initialCards.forEach(function(element){
 
   cardsList.append(cardElement);
 });
+
+////////////////////////////////////////////////////////////////
+
+const likeButton = container.querySelectorAll('.card__like');
+
+function likeCard (evt) {
+  evt.target.classList.toggle('card__like_active');
+}
+
+likeButton.forEach((item) => item.addEventListener("click", likeCard));
