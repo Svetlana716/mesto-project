@@ -1,7 +1,7 @@
 const container = document.querySelector('.container');
 const popup = document.querySelector('.popup');
 const editButton = container.querySelector('.profile__edit-button');
-const closeButton = popup.querySelector('.popup__close-button');
+const closeButton = document.querySelector('.popup__close-button');
 const addButton = container.querySelector('.profile__add-button');
 
 function openPopup(evt) {
@@ -13,19 +13,20 @@ editButton.addEventListener('click', openPopup);
 
 addButton.addEventListener('click', openPopup);
 
-function closePopup(evt) {
+ function closePopup(evt) {
   evt.preventDefault();
   popup.classList.remove('popup_opened');
 };
 
 closeButton.addEventListener('click', closePopup);
 
+
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
-const formElement = popup.querySelector('.form');
+const formElement = document.querySelector('.form');
 const inputName = formElement.querySelector('.form__item_el_user-name');
 const inputDescription = formElement.querySelector('.form__item_el_description');
-const submitButton = popup.querySelector('.form__submit-button');
+const submitButton = document.querySelector('.form__submit-button');
 
 function handleFormSubmit(evt) {
 evt.preventDefault();
@@ -90,3 +91,17 @@ function likeCard (evt) {
 }
 
 likeButton.forEach((item) => item.addEventListener("click", likeCard));
+
+//////////////////////////////////////////////////////////////////////////
+
+const deleteButton = container.querySelectorAll('.card__delete');
+
+
+function deleteCard (evt) {
+  const eventTarget = evt.target;
+  eventTarget.closest('.card').remove();
+}
+
+deleteButton.forEach((item) => item.addEventListener("click", deleteCard));
+
+//////////////////////////////////////////////////////////////////////
