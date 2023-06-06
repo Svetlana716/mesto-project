@@ -81,8 +81,9 @@
       <p class="footer__copyright">© 2020 Mesto Russia</p>
     </footer>
   </div>
-  <div class="popup popup_type_profile">
-    <div class="popup__container">
+  <!-- попап редактирования профиля -->
+  <div class="popup__bg">
+    <div class="popup popup_type_profile">
       <button class="popup__close-button" type="button" aria-label="кнопка закрыть"></button>
       <form class="form" name="edit-profile">
         <h2 class="form__heading">Редактировать&nbsp;профиль</h2>
@@ -94,8 +95,9 @@
       </form>
     </div>
   </div>
-  <div class="popup popup_type_new-place">
-    <div class="popup__container">
+  <!-- попап добавления новой карточки -->
+  <div class="popup__bg">
+    <div class="popup popup_type_new-place">
       <button class="popup__close-button" type="button" aria-label="кнопка закрыть"></button>
       <form class="form" name="add-place">
         <h2 class="form__heading">Новое&nbsp;место</h2>
@@ -107,6 +109,15 @@
       </form>
     </div>
   </div>
+<!-- попап открытия картинки -->
+<div class="popup__bg">
+  <div class="popup popup_type_image">
+    <button class="popup__close-button" type="button" aria-label="кнопка закрыть"></button>
+    <img class="popup__image" src="./images/karakachevsk.jpg" alt="">
+    <h2 class="popup__title"></h2>
+  </div>
+</div>
+  <!-- темплейт -->
   <template id="card">
     <li class="card">
       <img class="card__image" alt="Фото места">

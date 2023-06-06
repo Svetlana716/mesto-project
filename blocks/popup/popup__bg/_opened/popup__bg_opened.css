@@ -1,0 +1,5 @@
+.popup__bg_opened {
+  opacity: 1;
+  pointer-events: all;
+  transition: 0.5s all;
+}
