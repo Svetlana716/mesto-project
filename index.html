@@ -26,54 +26,6 @@
       </section>
       <section class="cards">
         <ul class="cards__list">
-          <li class="card">
-            <img class="card__image" src="./images/karakachevsk.jpg" alt="Карачаевск">
-            <div class="card__group">
-              <h2 class="card__title">Карачаевск</h2>
-              <button class="card__like" type="button" aria-label="кнопка лайк"></button>
-              <button class="card__delete" type="button" aria-label="кнопка удалить"></button>
-            </div>
-          </li>
-          <li class="card">
-            <img class="card__image" src="./images/elbrus.jpg" alt="Гора Эльбрус">
-            <div class="card__group">
-              <h2 class="card__title">Гора Эльбрус</h2>
-              <button class="card__like" type="button" aria-label="кнопка лайк"></button>
-              <button class="card__delete" type="button" aria-label="кнопка удалить"></button>
-            </div>
-          </li>
-          <li class="card">
-            <img class="card__image" src="./images/bombai.jpg" alt="Домбай">
-            <div class="card__group">
-              <h2 class="card__title">Домбай</h2>
-              <button class="card__like" type="button" aria-label="кнопка лайк"></button>
-              <button class="card__delete" type="button" aria-label="кнопка удалить"></button>
-            </div>
-          </li>
-          <li class="card">
-            <img class="card__image" src="./images/elbrus.jpg" alt="Гора Эльбрус">
-            <div class="card__group">
-              <h2 class="card__title">Гора Эльбрус</h2>
-              <button class="card__like" type="button" aria-label="кнопка лайк"></button>
-              <button class="card__delete" type="button" aria-label="кнопка удалить"></button>
-            </div>
-          </li>
-          <li class="card">
-            <img class="card__image" src="./images/bombai.jpg" alt="Домбай">
-            <div class="card__group">
-              <h2 class="card__title">Домбай</h2>
-              <button class="card__like" type="button" aria-label="кнопка лайк"></button>
-              <button class="card__delete" type="button" aria-label="кнопка удалить"></button>
-            </div>
-          </li>
-          <li class="card">
-            <img class="card__image" src="./images/karakachevsk.jpg" alt="Карачаево-Черкессия">
-            <div class="card__group">
-              <h2 class="card__title">Карачаево-Черкессия</h2>
-              <button class="card__like" type="button" aria-label="кнопка лайк"></button>
-              <button class="card__delete" type="button" aria-label="кнопка удалить"></button>
-            </div>
-          </li>
         </ul>
       </section>
     </main>
@@ -82,25 +34,25 @@
     </footer>
   </div>
   <!-- попап редактирования профиля -->
-  <div class="popup">
+  <div class="popup popup_type_profile">
     <div class="popup__container popup__container_type_form">
       <button class="popup__close-button" type="button" aria-label="кнопка закрыть"></button>
-      <form class="form" name="edit-profile">
+      <form class="form form_type_profile" name="edit-profile">
         <h2 class="form__heading">Редактировать&nbsp;профиль</h2>
         <fieldset class="form__input-container">
-          <input class="form__item form__item_el_user-name" type="text" name="user-name" value="Жак-Ив Кусто" required>
+          <input class="form__item form__item_el_user-name" type="text" name="user-name" value="Жак-Ив Кусто" placeholder="Имя пользователя" required>
           <input class="form__item form__item_el_description" type="text" name="description"
-            value="Исследователь океана" required>
+            value="Исследователь океана" placeholder="Описание" required>
         </fieldset>
         <button class="form__submit-button" type="submit" name="submit-button" value="Сохранить">Сохранить</button>
       </form>
     </div>
   </div>
   <!-- попап добавления новой карточки -->
-  <div class="popup">
+  <div class="popup popup_type_add-new-card">
     <div class="popup__container popup__container_type_form">
       <button class="popup__close-button" type="button" aria-label="кнопка закрыть"></button>
-      <form class="form" name="add-place">
+      <form class="form form_type_add-new-card" name="add-place">
         <h2 class="form__heading">Новое&nbsp;место</h2>
         <fieldset class="form__input-container">
           <input class="form__item form__item_el_place-name" type="text" name="place-name" value=""
@@ -113,11 +65,11 @@
     </div>
   </div>
   <!-- попап открытия картинки -->
-  <div class="popup popup_overlay_darker">
+  <div class="popup popup_type_full-image popup_overlay_darker">
     <div class="popup__container popup__container_type_image">
       <button class="popup__close-button" type="button" aria-label="кнопка закрыть"></button>
       <img class="popup__image" src="" alt="">
-      <h2 class="popup__title"></h2>
+      <h2 class="popup__image-title"></h2>
     </div>
   </div>
   <!-- темплейт -->
@@ -131,6 +83,7 @@
       </div>
     </li>
   </template>
+  <script src="cards.js"></script>
   <script src="index.js"></script>
 </body>
 
