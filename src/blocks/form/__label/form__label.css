@@ -1,0 +1,9 @@
+.form__label {
+  margin: 0 0 13px;
+}
+
+
+.form__label:last-child {
+  margin: 0;
+}
+

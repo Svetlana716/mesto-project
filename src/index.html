@@ -40,7 +40,7 @@
       <form class="form form_type_profile" name="edit-profile" novalidate>
         <h2 class="form__heading">Редактировать&nbsp;профиль</h2>
         <fieldset class="form__fieldset">
-
+          <label class="form__label">
           <input id="name-input" class="form__input form__input_el_user-name"
           type="text"
           name="user-name"
@@ -52,7 +52,8 @@
           data-error-message="Разрешены латинские, кириллические буквы, знаки дефиса и пробелы"
           required>
           <span class="form__input-error name-input-error"></span>
-
+          </label>
+          <label class="form__label">
           <input id="description-input" class="form__input form__input_el_description"
           type="text"
           name="description"
@@ -64,6 +65,7 @@
           data-error-message="Разрешены латинские, кириллические буквы, знаки дефиса и пробелы"
           required>
           <span class="form__input-error description-input-error"></span>
+          </label>
           <button class="form__submit-button" type="submit" name="submit-button" value="Сохранить">Сохранить</button>
         </fieldset>
 
@@ -77,7 +79,7 @@
       <form class="form form_type_add-new-card" name="add-place" novalidate>
         <h2 class="form__heading">Новое&nbsp;место</h2>
         <fieldset class="form__fieldset">
-
+          <label class="form__label">
           <input id="place-input" class="form__input form__input_el_place-name"
           type="text"
           name="place-name"
@@ -89,7 +91,8 @@
           data-error-message="Разрешены латинские, кириллические буквы, знаки дефиса и пробелы"
           required>
           <span class="form__input-error place-input-error"></span>
-
+          </label>
+          <label class="form__label">
           <input id="URL-input" class="form__input form__input_el_image-URL"
           type="url"
           name="image-URL"
@@ -97,6 +100,7 @@
           placeholder="Ссылка на картинку"
           required>
           <span class="form__input-error URL-input-error"></span>
+          </label>
           <button class="form__submit-button" type="submit" name="submit-button" value="Создать">Создать</button>
         </fieldset>
 
