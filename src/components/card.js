@@ -1,5 +1,6 @@
 import { popupImage, popupImageTitle, popupFullImage } from './modal.js'
 import { openPopup, likeCard, deleteCard } from './utils.js'
+
 const cardsList = document.querySelector('.cards__list');
 
 const initialCards = [

@@ -1,12 +1,15 @@
 .form__input-error {
-  display: none;
+  visibility: hidden;
+  display: block;
   color: #FF0000;
   font-weight: 400;
   font-size: 12px;
   line-height: 1.2;
   margin-bottom: 13px;
+  min-height: 30px;
+  padding-top: 5px;
 }
 
-.form__input-error:last-child {
+.form__input-error:last-of-type {
   margin-bottom: 0;
 }

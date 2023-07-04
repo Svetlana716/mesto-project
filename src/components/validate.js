@@ -1,29 +1,18 @@
-import { profileName, profileDescription, closePopups } from './modal.js'
-import { createCard, cardsList } from './card.js'
-
-const formProfile = document.querySelector('.form_type_profile');
-const inputUserName = formProfile.querySelector('.form__input_el_user-name');
-const inputDescription = formProfile.querySelector('.form__input_el_description');
-
-const formAddNewCard = document.querySelector('.form_type_add-new-card');
-const inputNameFormAddNewCard = document.querySelector('.form__input_el_place-name');
-const inputlinkFormAddNewCard = document.querySelector('.form__input_el_image-URL');
-
-function showInputError (form, input, errorMessage) {
+function showInputError (form, input, errorMessage, selectors) {
   const formError = form.querySelector(`.${input.id}-error`);
-  input.classList.add('form__input_type_error');
+  input.classList.add(selectors.inputErrorClass);
   formError.textContent = errorMessage;
-  formError.classList.add('form__input-error_active');
+  formError.classList.add(selectors.errorClass);
 };
 
-function hideInputError (form, input) {
+function hideInputError (form, input, selectors) {
   const formError = form.querySelector(`.${input.id}-error`);
-  input.classList.remove('form__input_type_error');
-  formError.classList.remove('form__input-error_active');
+  input.classList.remove(selectors.inputErrorClass);
+  formError.classList.remove(selectors.errorClass);
   formError.textContent = '';
 };
 
-function isValid (form, input) {
+function isValid (form, input, selectors) {
   if (input.validity.patternMismatch) {
     input.setCustomValidity(input.dataset.errorMessage);
   } else {
@@ -31,9 +20,9 @@ function isValid (form, input) {
   }
 
   if (!input.validity.valid) {
-    showInputError(form, input, input.validationMessage);
+    showInputError(form, input, input.validationMessage, selectors);
   } else {
-    hideInputError(form, input);
+    hideInputError(form, input, selectors);
   }
 };
 
@@ -43,62 +32,33 @@ function hasInvalidInput (inputList) {
   })
 };
 
-function toggleButtonState (inputList, button) {
+function toggleButtonState (inputList, button, selectors) {
   if (hasInvalidInput(inputList)) {
-    button.classList.add('form__submit-button_disabled');
+    button.classList.add(selectors.inactiveButtonClass);
     button.setAttribute('disabled', true);
   } else {
-    button.classList.remove('form__submit-button_disabled');
+    button.classList.remove(selectors.inactiveButtonClass);
     button.removeAttribute('disabled', true);
   }
 };
 
-function setEventListeners (form) {
-  const inputList = Array.from(form.querySelectorAll('.form__input'));
-  const button = form.querySelector('.form__submit-button');
-  toggleButtonState(inputList, button);
+function setEventListeners (form, selectors) {
+  const inputList = Array.from(form.querySelectorAll(selectors.inputSelector));
+  const button = form.querySelector(selectors.submitButtonSelector);
+  toggleButtonState(inputList, button, selectors);
   inputList.forEach((input) => {
     input.addEventListener('input', () => {
-      isValid(form, input);
-      toggleButtonState(inputList, button);
+      isValid(form, input, selectors);
+      toggleButtonState(inputList, button, selectors);
     });
   });
 };
 
-function enableValidation () {
-  const formList = Array.from(document.querySelectorAll('.form'));
+function enableValidation (selectors) {
+  const formList = Array.from(document.querySelectorAll(selectors.formSelector));
   formList.forEach((form) => {
-    form.addEventListener('submit', (evt) => {
-      evt.preventDefault();
-    });
-    const fieldsetList = Array.from(form.querySelectorAll('.form__fieldset'));
-    fieldsetList.forEach((fieldset) => {
-      setEventListeners(fieldset);
-    })
+  setEventListeners (form, selectors);
   });
 };
 
-function handleFormProfile(evt) {
-  evt.preventDefault();
-  profileName.textContent = inputUserName.value;
-  profileDescription.textContent = inputDescription.value;
-  closePopups(evt);
-};
-
-function handleFormAddNewCard(evt) {
-  evt.preventDefault();
-
-  const cardItemValue = {
-    link: inputlinkFormAddNewCard.value,
-    name: inputNameFormAddNewCard.value,
-    alt: inputNameFormAddNewCard.value,
-  };
-
-  const formCard = createCard(cardItemValue);
-  cardsList.prepend(formCard);
-
-  formAddNewCard.reset();
-  closePopups(evt);
-};
-
-export {formProfile, formAddNewCard, handleFormProfile, handleFormAddNewCard, enableValidation, inputUserName, inputDescription };
+export { enableValidation, isValid, toggleButtonState };

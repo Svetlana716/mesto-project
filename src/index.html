@@ -6,17 +6,16 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mesto</title>
-  <link rel="stylesheet" href="pages/index.css">
 </head>
 
 <body class="page">
   <div class="container">
     <header class="header">
-      <img class="header__logo" src="./images/logo.svg" alt="логотип">
+      <img class="header__logo" src="<%=require('./images/logo.svg')%>" alt="логотип">
     </header>
     <main class="content wrapper">
       <section class="profile">
-        <img class="profile__avatar" src="./images/avatar.jpg" alt="аватар пользователя">
+        <img class="profile__avatar" src="<%=require('./images/avatar.jpg')%>" alt="аватар пользователя">
         <div class="profile__info">
           <h1 class="profile__user-name">Жак-Ив Кусто</h1>
           <button class="profile__edit-button" type="button" aria-label="кнопка редактировать профиль"></button>
@@ -40,32 +39,15 @@
       <form class="form form_type_profile" name="edit-profile" novalidate>
         <h2 class="form__heading">Редактировать&nbsp;профиль</h2>
         <fieldset class="form__fieldset">
-          <label class="form__label">
-          <input id="name-input" class="form__input form__input_el_user-name"
-          type="text"
-          name="user-name"
-          value="Жак-Ив Кусто"
-          placeholder="Имя"
-          minlength="2"
-          maxlength="40"
-          pattern="^[a-z A-Z а-я А-Я \-]+$"
-          data-error-message="Разрешены латинские, кириллические буквы, знаки дефиса и пробелы"
-          required>
-          <span class="form__input-error name-input-error"></span>
-          </label>
-          <label class="form__label">
-          <input id="description-input" class="form__input form__input_el_description"
-          type="text"
-          name="description"
-          value="Исследователь океана"
-          placeholder="О себе"
-          minlength="2"
-          maxlength="200"
-          pattern="^[a-z A-Z а-я А-Я \-]+$"
-          data-error-message="Разрешены латинские, кириллические буквы, знаки дефиса и пробелы"
-          required>
-          <span class="form__input-error description-input-error"></span>
-          </label>
+            <input id="name-input" class="form__input form__input_el_user-name" type="text" name="user-name"
+              value="Жак-Ив Кусто" placeholder="Имя" minlength="2" maxlength="40" pattern="^[a-z A-Z а-я А-Я \-]+$"
+              data-error-message="Разрешены латинские, кириллические буквы, знаки дефиса и пробелы" required>
+            <span class="form__input-error name-input-error"></span>
+            <input id="description-input" class="form__input form__input_el_description" type="text" name="description"
+              value="Исследователь океана" placeholder="О себе" minlength="2" maxlength="200"
+              pattern="^[a-z A-Z а-я А-Я \-]+$"
+              data-error-message="Разрешены латинские, кириллические буквы, знаки дефиса и пробелы" required>
+            <span class="form__input-error description-input-error"></span>
           <button class="form__submit-button" type="submit" name="submit-button" value="Сохранить">Сохранить</button>
         </fieldset>
 
@@ -79,28 +61,13 @@
       <form class="form form_type_add-new-card" name="add-place" novalidate>
         <h2 class="form__heading">Новое&nbsp;место</h2>
         <fieldset class="form__fieldset">
-          <label class="form__label">
-          <input id="place-input" class="form__input form__input_el_place-name"
-          type="text"
-          name="place-name"
-          value=""
-          placeholder="Название"
-          minlength="2"
-          maxlength="30"
-          pattern="^[a-z A-Z а-я А-Я \-]+$"
-          data-error-message="Разрешены латинские, кириллические буквы, знаки дефиса и пробелы"
-          required>
-          <span class="form__input-error place-input-error"></span>
-          </label>
-          <label class="form__label">
-          <input id="URL-input" class="form__input form__input_el_image-URL"
-          type="url"
-          name="image-URL"
-          value=""
-          placeholder="Ссылка на картинку"
-          required>
-          <span class="form__input-error URL-input-error"></span>
-          </label>
+            <input id="place-input" class="form__input form__input_el_place-name" type="text" name="place-name" value=""
+              placeholder="Название" minlength="2" maxlength="30" pattern="^[a-z A-Z а-я А-Я \-]+$"
+              data-error-message="Разрешены латинские, кириллические буквы, знаки дефиса и пробелы" required>
+            <span class="form__input-error place-input-error"></span>
+            <input id="URL-input" class="form__input form__input_el_image-URL" type="url" name="image-URL" value=""
+              placeholder="Ссылка на картинку" required>
+            <span class="form__input-error URL-input-error"></span>
           <button class="form__submit-button" type="submit" name="submit-button" value="Создать">Создать</button>
         </fieldset>
 
@@ -118,7 +85,7 @@
   <!-- темплейт -->
   <template id="card">
     <li class="card">
-      <img class="card__image" alt="Фото места">
+      <img class="card__image" src="" alt="Фото места">
       <div class="card__group">
         <h2 class="card__title"></h2>
         <button class="card__like" type="button" aria-label="кнопка лайк"></button>
@@ -126,11 +93,6 @@
       </div>
     </li>
   </template>
-  <script type="module" src="components/utils.js"></script>
-  <script type="module" src="components/card.js"></script>
-  <script type="module" src="components/modal.js"></script>
-  <script type="module" src="components/validate.js"></script>
-  <script type="module" src="components/index.js"></script>
 </body>
 
 </html>
