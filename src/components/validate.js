@@ -42,6 +42,14 @@ function toggleButtonState (inputList, button, selectors) {
   }
 };
 
+export function validateInputs (inputList, selectors) {
+  inputList.forEach((input) => {
+      const form = input.closest(selectors.formSelector);
+      const button = form.querySelector(selectors.submitButtonSelector);
+      toggleButtonState(inputList, button, selectors);
+  })
+};
+
 function setEventListeners (form, selectors) {
   const inputList = Array.from(form.querySelectorAll(selectors.inputSelector));
   const button = form.querySelector(selectors.submitButtonSelector);
@@ -54,11 +62,10 @@ function setEventListeners (form, selectors) {
   });
 };
 
-function enableValidation (selectors) {
+export function enableValidation (selectors) {
   const formList = Array.from(document.querySelectorAll(selectors.formSelector));
   formList.forEach((form) => {
   setEventListeners (form, selectors);
   });
 };
 
-export { enableValidation, isValid, toggleButtonState };
