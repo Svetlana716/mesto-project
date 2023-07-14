@@ -1,4 +1,4 @@
-.profile__add-button {
+.profile__add-card-button {
   margin-left: auto;
   min-width: 150px;
   min-height: 50px;
@@ -8,13 +8,13 @@
   padding: 0;
 }
 
-.profile__add-button:hover {
+.profile__add-card-button:hover {
   opacity: .6;
   cursor: pointer;
 }
 
 @media screen and (max-width: 601px) {
-  .profile__add-button {
+  .profile__add-card-button {
     min-width: 282px;
     margin: 0 auto;
     background-size: 16px 16px;

@@ -1,20 +1,20 @@
-.profile__edit-button {
+.profile__edit-profile-button {
   width: 24px;
   height: 24px;
   background: url(../../../images/pen.svg) no-repeat 50% 50%;
   background-size: 10px 10px;
   padding: 0;
   border: 1px solid #fff;
-  grid-area: edit-button;
+  grid-area: edit-profile-button;
 }
 
-.profile__edit-button:hover {
+.profile__edit-profile-button:hover {
   opacity: .6;
   cursor: pointer;
 }
 
 @media screen and (max-width: 601px) {
-  .profile__edit-button {
+  .profile__edit-profile-button {
     margin-left: 28px;
     height: 18px;
     width: 18px;

@@ -3,7 +3,7 @@
   display: grid;
   grid-template-columns: fit-content(294px) 24px;
   grid-template-areas:
-    'user-name edit-button'
+    'user-name edit-profile-button'
     'description description';
   gap: 9px 19px;
   align-items: center;

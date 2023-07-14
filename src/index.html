@@ -15,13 +15,15 @@
     </header>
     <main class="content wrapper">
       <section class="profile">
-        <img class="profile__avatar" src="<%=require('./images/avatar.jpg')%>" alt="аватар пользователя">
+        <div class="profile__avatar">
+          <button class="profile__edit-avatar-button"></button>
+        </div>
         <div class="profile__info">
           <h1 class="profile__user-name">Жак-Ив Кусто</h1>
-          <button class="profile__edit-button" type="button" aria-label="кнопка редактировать профиль"></button>
+          <button class="profile__edit-profile-button" type="button" aria-label="кнопка редактировать профиль"></button>
           <p class="profile__description">Исследователь океана</p>
         </div>
-        <button class="profile__add-button" type="button" aria-label="кнопка добавить"></button>
+        <button class="profile__add-card-button" type="button" aria-label="кнопка добавить"></button>
       </section>
       <section class="cards">
         <ul class="cards__list">
@@ -33,10 +35,10 @@
     </footer>
   </div>
   <!-- попап редактирования профиля -->
-  <div class="popup popup_type_profile">
+  <div class="popup popup_type_edit-profile">
     <div class="popup__container popup__container_type_form">
       <button class="popup__close-button" type="button" aria-label="кнопка закрыть"></button>
-      <form class="form form_type_profile" name="edit-profile" novalidate>
+      <form class="form form_type_edit-profile" name="edit-profile" novalidate>
         <h2 class="form__heading">Редактировать&nbsp;профиль</h2>
         <fieldset class="form__fieldset">
             <input id="name-input" class="form__input form__input_el_user-name" type="text" name="user-name"
@@ -49,8 +51,8 @@
               data-error-message="Разрешены латинские, кириллические буквы, знаки дефиса и пробелы" required>
             <span class="form__input-error description-input-error"></span>
           <button class="form__submit-button" type="submit" name="submit-button" value="Сохранить">Сохранить</button>
+          <span class="form__spinner" style="display: none;">Сохранение...</span>
         </fieldset>
-
       </form>
     </div>
   </div>
@@ -69,8 +71,8 @@
               placeholder="Ссылка на картинку" required>
             <span class="form__input-error URL-input-error"></span>
           <button class="form__submit-button" type="submit" name="submit-button" value="Создать">Создать</button>
+          <span class="form__spinner" style="display: none;">Создание...</span>
         </fieldset>
-
       </form>
     </div>
   </div>
@@ -82,13 +84,32 @@
       <h2 class="popup__image-title"></h2>
     </div>
   </div>
+  <!-- попап редактирования аватарки -->
+  <div class="popup popup_type_edit-avatar">
+    <div class="popup__container popup__container_type_form">
+      <button class="popup__close-button" type="button" aria-label="кнопка закрыть"></button>
+      <form class="form form_type_edit-avatar" name="edit-avatar" novalidate>
+        <h2 class="form__heading">Обновить&nbsp;аватар</h2>
+        <fieldset class="form__fieldset">
+          <input id="URL-input" class="form__input form__input_el_avatar-URL" type="url" name="avatar-URL" value=""
+          placeholder="Ссылка на аватарку" required>
+        <span class="form__input-error URL-input-error"></span>
+          <button class="form__submit-button" type="submit" name="submit-button" value="Сохранить">Сохранить</button>
+          <span class="form__spinner" style="display: none;">Сохранение...</span>
+        </fieldset>
+      </form>
+    </div>
+  </div>
   <!-- темплейт -->
   <template id="card">
     <li class="card">
       <img class="card__image" src="" alt="Фото места">
       <div class="card__group">
         <h2 class="card__title"></h2>
-        <button class="card__like" type="button" aria-label="кнопка лайк"></button>
+        <div class="card__like-container">
+          <button class="card__like-button" type="button" aria-label="кнопка лайк"></button>
+          <p class="card__like-counter"></p>
+        </div>
         <button class="card__delete" type="button" aria-label="кнопка удалить"></button>
       </div>
     </li>

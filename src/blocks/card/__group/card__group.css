@@ -1,6 +1,6 @@
 .card__group {
   display: flex;
-  margin: 21px 15px 26px 21px;
+  margin: 21px;
   justify-content: space-between;
   align-items: center;
   max-width: 241px;

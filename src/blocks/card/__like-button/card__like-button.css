@@ -1,4 +1,4 @@
-.card__like {
+.card__like-button {
   background: url(../../../images/like-disabled.svg) no-repeat 50% 50%;
   min-width: 22px;
   min-height: 19px;
@@ -6,7 +6,7 @@
   border: none;
 }
 
-.card__like:hover {
+.card__like-button:hover {
   opacity: .5;
   cursor: pointer;
 }
