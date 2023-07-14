@@ -1,6 +1,6 @@
 import { popupImage, popupImageTitle, popupFullImage } from './utils.js'
 import { openPopup } from './modal.js'
-import { likeCard, disLikeCard, deleteCard } from './api.js'
+import { likeCard, disLikeCard, deleteCard, checkReject } from './api.js'
 
 export const cardsList = document.querySelector('.cards__list');
 
@@ -46,19 +46,21 @@ function setCardId (evt) {
 function likeCards(evt) {
   if (evt.target.classList.contains('card__like-button_active')) {
     const cardId = setCardId(evt);
-    evt.target.classList.toggle('card__like-button_active');
+    evt.target.classList.remove('card__like-button_active');
     return disLikeCard(cardId)
     .then((data) => {
       handleLike(data);
     })
+    .catch(checkReject)
   }
   if (!evt.target.classList.contains('card__like-button_active')) {
     const cardId = setCardId(evt);
-    evt.target.classList.toggle('card__like-button_active');
+    evt.target.classList.add('card__like-button_active');
     return likeCard(cardId)
     .then((data) => {
       handleLike(data);
     })
+    .catch(checkReject)
   }
 };
 
@@ -75,6 +77,7 @@ function deleteCards(evt) {
   .then(() => {
     targetCard.remove();
   })
+  .catch(checkReject)
 };
 
 function fullImage (evt) {
@@ -89,7 +92,6 @@ function fullImage (evt) {
 };
 
 export function createCard(data, userId) {
-  /* debugger; */
   const templateCard = document.querySelector('#card').content;
   const cardElement = templateCard.querySelector('.card').cloneNode(true);
   const cardImage = cardElement.querySelector('.card__image');

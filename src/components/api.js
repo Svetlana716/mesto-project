@@ -13,7 +13,7 @@ function checkResponse (res) {
   return res.json();
 }
 
-function checkReject (err) {
+export function checkReject (err) {
   console.error(`Ошибка: ${err}`);
 }
 
@@ -22,7 +22,6 @@ export function getUserInfo () {
     headers: config.headers
 })
 .then(checkResponse)
-.catch(checkReject)
 };
 
 export function getInitialCards () {
@@ -30,7 +29,6 @@ export function getInitialCards () {
     headers: config.headers
 })
 .then(checkResponse)
-.catch(checkReject)
 };
 
 export function editProfile ({name, about}) {
@@ -40,7 +38,6 @@ export function editProfile ({name, about}) {
   body: JSON.stringify({name, about}),
 })
 .then(checkResponse)
-.catch(checkReject)
 };
 
 export function editAvatar ({avatar}) {
@@ -50,7 +47,6 @@ export function editAvatar ({avatar}) {
     body: JSON.stringify({avatar}),
   })
   .then(checkResponse)
-.catch(checkReject)
 };
 
 export function postNewCard ({name, link}) {
@@ -60,7 +56,6 @@ export function postNewCard ({name, link}) {
   body: JSON.stringify({name, link}),
 })
 .then(checkResponse)
-.catch(checkReject)
 };
 
 export function deleteCard (cardId) {
@@ -69,7 +64,6 @@ export function deleteCard (cardId) {
   headers: config.headers,
 })
 .then(checkResponse)
-.catch(checkReject)
 };
 
 export function likeCard (cardId) {
@@ -78,7 +72,6 @@ export function likeCard (cardId) {
   headers: config.headers,
 })
 .then(checkResponse)
-.catch(checkReject)
 };
 
 export function disLikeCard (cardId) {
@@ -87,5 +80,4 @@ export function disLikeCard (cardId) {
   headers: config.headers,
 })
 .then(checkResponse)
-.catch(checkReject)
 };
