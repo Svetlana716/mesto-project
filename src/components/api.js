@@ -12,7 +12,7 @@ export default class Api {
   }
 
   //сделал небольшой рефакторинг
-  //чтобы не дублировать в запросах fetch и then, создал приватный метод и его уже вызываю в запросах
+  //чтобы не дублировать в запросах fetch и then, создал приватный метод и его уже вызываю в запросах к серверу
   /*_request(endpoint, options) {
     return fetch(`${this._baseUrl}/${endpoint}`, options).then(this._checkResponse);
   }*/
