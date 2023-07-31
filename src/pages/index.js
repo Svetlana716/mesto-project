@@ -27,9 +27,40 @@ import { checkReject } from '../utils/utils.js'
 import  Api from '../components/Api.js'
 
 const api = new Api(config);
-
 let userId = null;
 
+//////////////////////////////////////////////////////////
+/* _handleLike(data) {
+  countLikes(data._id, data.likes.length);
+  addLikeCounter(null, data);
+}
+
+_setCardId (evt) {
+  const targetCard = evt.target.closest('.card');
+  return targetCard.dataset.id;
+};
+
+_likeCards(evt) {
+  if (evt.target.classList.contains('card__like-button_active')) {
+    const cardId = setCardId(evt);
+    evt.target.classList.remove('card__like-button_active');
+    return api.disLikeCard(cardId)
+    .then((data) => {
+      handleLike(data);
+    })
+    .catch(checkReject)
+  }
+  if (!evt.target.classList.contains('card__like-button_active')) {
+    const cardId = setCardId(evt);
+    evt.target.classList.add('card__like-button_active');
+    return api.likeCard(cardId)
+    .then((data) => {
+      handleLike(data);
+    })
+    .catch(checkReject)
+  }
+} */
+//////////////////////////////////////////////////////
 function showUserInfo (data) {
     profileName.textContent = data.name;
     profileDescription.textContent = data.about;
