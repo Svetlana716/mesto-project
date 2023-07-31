@@ -1,9 +1,32 @@
-import '../pages/index.css';
-import { buttonOpenPopupEditProfile, buttonOpenPopupAddNewCard, popups, buttonsClosePopups, formEditProfile, formAddNewCard, selectors, popupEditProfile, popupAddNewCard, inputUserName, inputDescription, inputNameFormAddNewCard, inputLinkFormAddNewCard, profileName, profileDescription, profileAvatar, popupEditAvatar, buttonOpenPopupEditAvatar, formEditAvatar, inputLinkFormEditAvatar } from './utils.js'
-import { mouseHandler, closePopups, openPopup } from './modal.js'
-import { validateInputs, enableValidation } from './validate.js'
-import { renderNewCard, renderInitialCards } from './card.js'
-import { getUserInfo, getInitialCards, editProfile, editAvatar, postNewCard, checkReject } from './api.js'
+import './index.css';
+import {buttonOpenPopupEditProfile,
+        buttonOpenPopupAddNewCard,
+        popups,
+        buttonsClosePopups,
+        formEditProfile,
+        formAddNewCard,
+        selectorsAndClasses,
+        popupEditProfile,
+        popupAddNewCard,
+        inputUserName,
+        inputDescription,
+        inputNameFormAddNewCard,
+        inputLinkFormAddNewCard,
+        profileName,
+        profileDescription,
+        profileAvatar,
+        popupEditAvatar,
+        buttonOpenPopupEditAvatar,
+        formEditAvatar,
+        inputLinkFormEditAvatar,
+        config } from '../utils/constants.js'
+import { mouseHandler, closePopups, openPopup } from '../components/modal.js'
+import { validateInputs, enableValidation } from '../components/FormValidator.js'
+import { renderNewCard, renderInitialCards } from '../components/Section.js'
+import { checkReject } from '../utils/utils.js'
+import  Api from '../components/Api.js'
+
+const api = new Api(config);
 
 let userId = null;
 
@@ -14,8 +37,8 @@ function showUserInfo (data) {
 };
 
 function renderPage () {
-  const profile = getUserInfo();
-  const cards = getInitialCards();
+  const profile = api.getUserInfo();
+  const cards = api.getInitialCards();
   Promise.all([profile, cards])
   .then((data) => {
     const [profileData, cardsData] = data;
@@ -34,19 +57,19 @@ function setProfileFormInputValues() {
 function openPopupEditProfile(evt) {
   evt.preventDefault();
   setProfileFormInputValues();
-  validateInputs([inputUserName, inputDescription], selectors);
+  validateInputs([inputUserName, inputDescription], selectorsAndClasses);
   openPopup(popupEditProfile);
 };
 
 function openPopupAddNewCard(evt) {
   evt.preventDefault();
-  validateInputs([inputNameFormAddNewCard, inputLinkFormAddNewCard], selectors);
+  validateInputs([inputNameFormAddNewCard, inputLinkFormAddNewCard], selectorsAndClasses);
   openPopup(popupAddNewCard);
 };
 
 function openPopupEditAvatar(evt) {
   evt.preventDefault();
-  validateInputs([inputLinkFormEditAvatar], selectors);
+  validateInputs([inputLinkFormEditAvatar], selectorsAndClasses);
   openPopup(popupEditAvatar);
 }
 
@@ -63,7 +86,7 @@ function runLoading (isLoading, form) {
 function handleFormEditProfile(evt) {
   evt.preventDefault();
   runLoading (true, formEditProfile);
-  editProfile({
+  api.editProfile({
     name: inputUserName.value,
     about: inputDescription.value,
   })
@@ -81,7 +104,7 @@ function handleFormEditProfile(evt) {
 function handleFormEditAvatar(evt) {
   evt.preventDefault();
   runLoading (true, formEditAvatar);
-  editAvatar({
+  api.editAvatar({
     avatar: inputLinkFormEditAvatar.value,
   })
   .then((data) => {
@@ -99,7 +122,7 @@ function handleFormEditAvatar(evt) {
 function handleFormAddNewCard(evt) {
   evt.preventDefault();
   runLoading (true, formAddNewCard);
-  postNewCard({
+  api.postNewCard({
     name: inputNameFormAddNewCard.value,
     link: inputLinkFormAddNewCard.value,
   })
@@ -125,5 +148,5 @@ formEditAvatar.addEventListener('submit', handleFormEditAvatar);
 popups.forEach((item) => item.addEventListener('mousedown', mouseHandler));
 buttonsClosePopups.forEach((item) => item.addEventListener('click', closePopups));
 
-enableValidation(selectors);
+enableValidation(selectorsAndClasses);
 renderPage();

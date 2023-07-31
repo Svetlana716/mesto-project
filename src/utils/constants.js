@@ -23,17 +23,27 @@ export const buttonOpenPopupEditAvatar = document.querySelector('.profile__edit-
 export const formEditAvatar = document.querySelector('.form_type_edit-avatar');
 export const inputLinkFormEditAvatar = formEditAvatar.querySelector('.form__input_el_avatar-URL');
 
-export const popupFullImage = document.querySelector('.popup_type_full-image');
+export const popupFullCardImage = document.querySelector('.popup_type_full-image');
 export const popupImage = document.querySelector('.popup__image');
 export const popupImageTitle = document.querySelector('.popup__image-title');
 
 export const buttonsClosePopups = document.querySelectorAll('.popup__close-button');
 
-export const selectors = {
+export const cardsList = document.querySelector('.cards__list');
+
+export const selectorsAndClasses = {
   formSelector: '.form',
   inputSelector: '.form__input',
   submitButtonSelector: '.form__submit-button',
   inactiveButtonClass: 'form__submit-button_disabled',
   inputErrorClass: 'form__input_type_error',
   errorClass: 'form__input-error_active'
+};
+
+export const config = {
+  baseUrl: 'https://nomoreparties.co/v1/plus-cohort-26',
+  headers: {
+    authorization: '61d49f57-4ce9-4c25-b8be-be0fabbb76d9',
+    'Content-Type': 'application/json'
+  }
 };
