@@ -6,7 +6,7 @@ import  Api  from './Api.js'
 const api = new Api(config);
 
 export default class Card {
-  constructor (data, userId, cardSelector) {
+  constructor (data, userId, cardSelector, handleCardClick) {
     this._cardName = data.name;
     this._cardLink = data.link;
     this._cardId = data._id;
@@ -14,6 +14,7 @@ export default class Card {
     this._cardLikes = data.likes;
     this._userId = userId;
     this._cardSelector = cardSelector;
+    this._handleCardClick = handleCardClick;
   }
 
   _getCard () {
@@ -25,7 +26,7 @@ export default class Card {
     this._isLiked = data.likes.some((like) => {
       like._id === this._userId;
     });
-
+    this._cardLikesCounter.textContent = this._cardLikes.length;
     if (this._isLiked) {
       this._cardLikeButton.classList.add('card__like-button_active');
     } else {
@@ -42,72 +43,25 @@ export default class Card {
     }
   }
 
-  _handleLike(data) {
-    countLikes(data._id, data.likes.length);
-    addLikeCounter(null, data);
-  }
-
-  _setCardId (evt) {
-    const targetCard = evt.target.closest('.card');
-    return targetCard.dataset.id;
-  };
-
-  _likeCards(evt) {
-    if (evt.target.classList.contains('card__like-button_active')) {
-      const cardId = setCardId(evt);
-      evt.target.classList.remove('card__like-button_active');
-      return api.disLikeCard(cardId)
-      .then((data) => {
-        handleLike(data);
-      })
-      .catch(checkReject)
-    }
-    if (!evt.target.classList.contains('card__like-button_active')) {
-      const cardId = setCardId(evt);
-      evt.target.classList.add('card__like-button_active');
-      return api.likeCard(cardId)
-      .then((data) => {
-        handleLike(data);
-      })
-      .catch(checkReject)
+  _addDeleteIcon () {
+    if (this._ownerId === this._userId) {
+      this._cardDeleteButton.classList.add('card__delete-button_active')
     }
   }
 
-  _addDeleteIcon (deleteIcon, data, userId) {
-    if (data.owner._id === userId) {
-      deleteIcon.classList.add('card__delete-button_active')
-    }
-  };
-
-  _deleteCards(evt) {
-    const targetCard = evt.target.closest('.card');
-    const cardId = setCardId(evt);
-    api.deleteCard(cardId)
-    .then(() => {
-      targetCard.remove();
-    })
-    .catch(checkReject)
-  };
-
-  _fullCardImage (evt) {
-    const targetCard = evt.target.closest('.card');
-    const targetCardImage = targetCard.querySelector('.card__image');
-    const targetCardTitle = targetCard.querySelector('.card__title');
-
-    openPopup(popupFullCardImage);
-    popupImage.src = targetCardImage.src;
-    popupImage.alt = targetCardImage.alt;
-    popupImageTitle.textContent = targetCardTitle.textContent;
+  _deleteCards() {
+    this._card.remove();
+    this._card = null;
   }
 
   _setEventListeners () {
-    this._element.querySelector('.card__like-button').addEventListener('click', () => {
+    this._cardLikeButton.addEventListener('click', () => {
       this._likeCards();
     });
-    this._element.querySelector('.card__delete-button').addEventListener('click', () => {
+    this._cardDeleteButton.addEventListener('click', () => {
       this._deleteCards();
     });
-    this._element.querySelector('.card__image').addEventListener('click', () => {
+    this._cardImage.addEventListener('click', () => {
       this._fullCardImage();
     });
   }
