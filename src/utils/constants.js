@@ -1,5 +1,3 @@
-export const popups = document.querySelectorAll('.popup');
-
 export const popupEditProfile = document.querySelector('.popup_type_edit-profile');
 export const buttonOpenPopupEditProfile = document.querySelector('.profile__edit-profile-button');
 export const profileName = document.querySelector('.profile__user-name');
@@ -26,8 +24,6 @@ export const inputLinkFormEditAvatar = formEditAvatar.querySelector('.form__inpu
 export const popupFullCardImage = document.querySelector('.popup_type_full-image');
 export const popupImage = document.querySelector('.popup__image');
 export const popupImageTitle = document.querySelector('.popup__image-title');
-
-export const buttonsClosePopups = document.querySelectorAll('.popup__close-button');
 
 export const cardsList = document.querySelector('.cards__list');
 

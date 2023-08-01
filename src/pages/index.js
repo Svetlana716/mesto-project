@@ -1,8 +1,6 @@
 import './index.css';
 import {buttonOpenPopupEditProfile,
         buttonOpenPopupAddNewCard,
-        popups,
-        buttonsClosePopups,
         formEditProfile,
         formAddNewCard,
         selectorsAndClasses,
@@ -20,14 +18,35 @@ import {buttonOpenPopupEditProfile,
         formEditAvatar,
         inputLinkFormEditAvatar,
         config } from '../utils/constants.js'
-import { mouseHandler, closePopups, openPopup } from '../components/modal.js'
+
 import { validateInputs, enableValidation } from '../components/FormValidator.js'
 import { renderNewCard, renderInitialCards } from '../components/Section.js'
 import { checkReject } from '../utils/utils.js'
 import  Api from '../components/Api.js'
+import Card from '../components/Card.js';
+import PopupWithImage from '../components/PopupWithImage.js';
+
+let userId = null;
 
 const api = new Api(config);
-let userId = null;
+
+const popupWithImage = new PopupWithImage('.popup_type_full-image');
+
+function createCard (data) {
+  const card = new Card(
+    data,
+    userInfo.userId, // из класса информация о пользователе
+    '#card', {
+    handleCardClick: data => popupWithImage.openPopup(data.name, data.link), // метод из класса PopupWithImage
+    handleCardDelete: () => {
+      card.deleteCards();
+      api.deleteCard(data._id);
+    },
+    handleAddLike: () => api.likeCard(data._id),
+    handleDeleteLike: () => api.disLikeCard(data._id)
+  });
+  return card;
+};
 
 function showUserInfo (data) {
     profileName.textContent = data.name;
@@ -143,9 +162,6 @@ buttonOpenPopupEditAvatar.addEventListener('click', openPopupEditAvatar);
 formEditProfile.addEventListener('submit', handleFormEditProfile);
 formAddNewCard.addEventListener('submit', handleFormAddNewCard);
 formEditAvatar.addEventListener('submit', handleFormEditAvatar);
-
-popups.forEach((item) => item.addEventListener('mousedown', mouseHandler));
-buttonsClosePopups.forEach((item) => item.addEventListener('click', closePopups));
 
 enableValidation(selectorsAndClasses);
 renderPage();

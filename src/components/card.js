@@ -100,12 +100,12 @@ export default class Card {
 ///////////////////////////////////////////////////////////////
 // создание экземпляяра классса card  в index.js
 
-function createCard (data) {
+/* function createCard (data) {
   const card = new Card(
     data,
     userInfo.userId, // из класса информация о пользователе
     '#card', {
-    handleCardClick: data => popupImage.open(data), // метод из класса popupImage
+    handleCardClick: data => popupWithImage.openPopup(data), // метод из класса PopupWithImage
     handleCardDelete: () => {
       card.deleteCards();
       api.deleteCard(data._id);
@@ -114,4 +114,4 @@ function createCard (data) {
     handleDeleteLike: () => api.disLikeCard(data._id)
   });
   return card;
-};
+}; */

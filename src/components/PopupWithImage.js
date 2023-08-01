@@ -1,15 +1,20 @@
-/* class PopupWithImage extends Popup{
-  constructor() {
+import Popup from "./Popup.js";
 
+export default class PopupWithImage extends Popup{
+  constructor(popupSelector) {
+    super(popupSelector);
+    this._popupImage = this._popup.querySelector('popup__image');
+    this._popupImageTitle = this._popup.querySelector('popup__image-title');
   }
-_fullCardImage (evt) {
-  const targetCard = evt.target.closest('.card');
-  const targetCardImage = targetCard.querySelector('.card__image');
-  const targetCardTitle = targetCard.querySelector('.card__title');
 
-  openPopup(popupFullCardImage);
-  popupImage.src = targetCardImage.src;
-  popupImage.alt = targetCardImage.alt;
-  popupImageTitle.textContent = targetCardTitle.textContent;
-}
-} */
+  openPopup (data) {
+    super.openPopup();
+    this._popupImage.srs = data.link;
+    this._popupImage.alt = data.name;
+    this._popupImageTitle.textContent = data.name;
+  }
+};
+///////////////////////////////////////////////////////////
+// создание экземпляяра классса PopupWithImage  в index.js
+
+/* const popupWithImage = new PopupWithImage('.popup_type_full-image'); */
