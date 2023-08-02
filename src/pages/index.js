@@ -10,33 +10,88 @@ import {buttonOpenPopupEditProfile,
         inputDescription,
         inputNameFormAddNewCard,
         inputLinkFormAddNewCard,
-        profileName,
-        profileDescription,
-        profileAvatar,
         popupEditAvatar,
         buttonOpenPopupEditAvatar,
         formEditAvatar,
         inputLinkFormEditAvatar,
-        config } from '../utils/constants.js'
-
-import { validateInputs, enableValidation } from '../components/FormValidator.js'
-import { renderNewCard, renderInitialCards } from '../components/Section.js'
+        config,
+        //selectors
+        profileNameSelector,
+        profileDescriptionSelector,
+        profileAvatarSelector,
+        cardsContainerSelector,
+        cardTemplateSelector,
+        popupFullCardImageSelector,
+      } from '../utils/constants.js'
 import { checkReject } from '../utils/utils.js'
-import  Api from '../components/Api.js'
+
+import Api from '../components/Api.js';
+
+import FormValidator from '../components/FormValidator.js';
+
+import Section from '../components/Section.js';
+
+import UserInfo from '../components/UserInfo.js';
+
 import Card from '../components/Card.js';
+
 import PopupWithImage from '../components/PopupWithImage.js';
+
+import PopupWithForm from '../components/PopupWithForm.js';
 
 let userId = null;
 
 const api = new Api(config);
 
-const popupWithImage = new PopupWithImage('.popup_type_full-image');
+const userInfo = new UserInfo(profileNameSelector, profileDescriptionSelector, profileAvatarSelector);
+
+function setProfileFormInputValues() { //функция для заполнения инпутов при открытии формы редактирования профиля
+  const userData = userInfo.getUserInfo();
+
+  inputUserName.value = userData.name;
+  inputDescription.value = userData.about;
+};
+
+function setUserInfo (data) { // добавляет новые данные пользователя на страницу
+  const userData = userInfo.setUserInfo(data); //метод экземпляра класса UserInfo для обновления информации о профиле
+
+  profileName.textContent = userData.name;
+  profileDescription.textContent = userData.about;
+  profileAvatar.style.backgroundImage = `url("${userData.avatar}")`;
+};
+
+const cardList = new Section({
+  initialArray: cardsData,
+  renderer: (cardItem) => {
+    const card = createCard(cardItem);
+    const cardElement = card.generate();
+    return cardElement;
+  },
+  cardsContainerSelector
+});
+
+// рендер страницы (отрисовка информации о пользователе и карточек)
+
+function renderPage () {
+  const profile = api.getUserInfo();  //получение информации о пользователе с сервера
+  const cards = api.getInitialCards(); // получение изначальных(дабавленных раннее) карточек с сервера
+  Promise.all([profile, cards]) // будет выполнен, когда будут выполнены промисы [profile, cards]
+  .then((data) => {
+    const [profileData, cardsData] = data;
+    setUserInfo(profileData); // вызов функции setUserInfo см. выше
+    cardList.renderItems(cardsData);  //метод экземпляра класса Section
+  })
+  .catch(checkReject)
+};
+
+// попап с фотографией
+const popupWithImage = new PopupWithImage(popupFullCardImageSelector);
 
 function createCard (data) {
   const card = new Card(
     data,
     userInfo.userId, // из класса информация о пользователе
-    '#card', {
+    cardTemplateSelector, {
     handleCardClick: data => popupWithImage.openPopup(data.name, data.link), // метод из класса PopupWithImage
     handleCardDelete: () => {
       card.deleteCards();
@@ -48,29 +103,21 @@ function createCard (data) {
   return card;
 };
 
-function showUserInfo (data) {
-    profileName.textContent = data.name;
-    profileDescription.textContent = data.about;
-    profileAvatar.style.backgroundImage = `url("${data.avatar}")`;
-};
-
-function renderPage () {
-  const profile = api.getUserInfo();
-  const cards = api.getInitialCards();
-  Promise.all([profile, cards])
-  .then((data) => {
-    const [profileData, cardsData] = data;
-    userId = profileData._id;
-    showUserInfo(profileData);
-    renderInitialCards(cardsData, userId);
-  })
-  .catch(checkReject)
-}
-
-function setProfileFormInputValues() {
-  inputUserName.value = profileName.textContent;
-  inputDescription.value = profileDescription.textContent;
-}
+const popupFormEditProfile = new PopupWithForm(
+  '.popup_type_edit-profile',
+  (inputs) => {
+    runLoading (true, formEditProfile);
+  api
+    .editProfile(inputs.inputUserName, inputs.inputDescription)
+    .then((data) => {
+      userInfo.setUserInfo(data); //метод класса userInfo
+      popupFormEditProfile.close();
+    })
+    .catch(checkReject)
+    .finally(() => {
+      runLoading (false, formEditProfile);
+    });
+});
 
 function openPopupEditProfile(evt) {
   evt.preventDefault();

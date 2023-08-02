@@ -1,7 +1,5 @@
 export const popupEditProfile = document.querySelector('.popup_type_edit-profile');
 export const buttonOpenPopupEditProfile = document.querySelector('.profile__edit-profile-button');
-export const profileName = document.querySelector('.profile__user-name');
-export const profileDescription = document.querySelector('.profile__description');
 
 export const formEditProfile = document.querySelector('.form_type_edit-profile');
 export const inputUserName = formEditProfile.querySelector('.form__input_el_user-name');
@@ -14,18 +12,24 @@ export const formAddNewCard = document.querySelector('.form_type_add-new-card');
 export const inputNameFormAddNewCard = formAddNewCard.querySelector('.form__input_el_place-name');
 export const inputLinkFormAddNewCard = formAddNewCard.querySelector('.form__input_el_image-URL');
 
-export const profileAvatar = document.querySelector('.profile__avatar');
+
 export const popupEditAvatar = document.querySelector('.popup_type_edit-avatar');
 export const buttonOpenPopupEditAvatar = document.querySelector('.profile__edit-avatar-button');
 
 export const formEditAvatar = document.querySelector('.form_type_edit-avatar');
 export const inputLinkFormEditAvatar = formEditAvatar.querySelector('.form__input_el_avatar-URL');
 
-export const popupFullCardImage = document.querySelector('.popup_type_full-image');
+
 export const popupImage = document.querySelector('.popup__image');
 export const popupImageTitle = document.querySelector('.popup__image-title');
 
-export const cardsList = document.querySelector('.cards__list');
+//селекторы
+export const profileNameSelector = '.profile__user-name';
+export const profileDescriptionSelector = '.profile__description';
+export const profileAvatarSelector = '.profile__avatar';
+export const cardsContainerSelector = '.cards__list';
+export const cardTemplateSelector = '#card';
+export const popupFullCardImageSelector = '.popup_type_full-image';
 
 export const selectorsAndClasses = {
   formSelector: '.form',

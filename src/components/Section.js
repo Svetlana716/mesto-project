@@ -1,47 +1,18 @@
-import {createCard} from './Card.js'
-import { cardsList } from '../utils/constants';
-
-/*export default class Section {
-  constructor ({ data, renderer }, containerSelector) {
-    this._initialArray = data;
-    this._renderer = renderer;
-    this._container = document.querySelector(containerSelector);
+export default class Section {
+  constructor ({ items, renderer }, containerSelector) {
+    this._initialArray = items; // массив данных, которые нужно добавить на страницу при инициализации класса
+    this._renderer = renderer; // функция, которая отвечает за создание и отрисовку данных на странице
+    this._container = document.querySelector(containerSelector); // селектор контейнера, в который нужно добавлять созданные элементы
   }
-
-  setItem (element) {
+//отвечает за отрисовку всех элементов.
+//Отрисовка каждого отдельного элемента должна осуществляться функцией renderer.
+  renderItems () {
+      this._initialArray.forEach((item) => {
+        this._renderer(item);
+      })
+    }
+// принимает DOM-элемент и добавляет его в контейнер
+  addItem(element) {
     this._container.append(element);
   }
-
-  renderItems () {
-    this._initialArray.forEach((item) => {
-      this._renderer(item);
-    })
-  }
-}
-
-
-const cardList = new Section({
-  data: cardsData,
-  renderer: (cardItem) => {
-    const card = new Card (data, userId, '#card');
-    const cardElement = card.generate();
-    cardList.setItem(cardElement);
-  },
-  cardsList
-});
-
-cardList.renderItems(); */
-
-/////////////////////////////////////
-
-export function renderNewCard(data, userId) {
-  const card = createCard (data, userId);
-  cardsList.prepend(card);
-};
-
-export function renderInitialCards(cardsData, userId) {
-cardsData.forEach((data => {
-  const card = createCard(data, userId);
-  cardsList.append(card);
-}))
 };
