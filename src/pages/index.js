@@ -1,20 +1,27 @@
 import './index.css';
-import {buttonOpenPopupEditProfile,
+import {//кнопки открытия попапов
+        buttonOpenPopupEditProfile,
         buttonOpenPopupAddNewCard,
+        buttonOpenPopupEditAvatar,
+        //формы
         formEditProfile,
         formAddNewCard,
-        selectorsAndClasses,
+        formEditAvatar,
+        //попапы
         popupEditProfile,
         popupAddNewCard,
+        popupEditAvatar,
+        //инпуты
         inputUserName,
         inputDescription,
+
         inputNameFormAddNewCard,
         inputLinkFormAddNewCard,
-        popupEditAvatar,
-        buttonOpenPopupEditAvatar,
-        formEditAvatar,
+
         inputLinkFormEditAvatar,
-        config,
+        //
+        selectorsAndClasses,//для валидации
+        config,//для фетч запросов
         //selectors
         profileNameSelector,
         profileDescriptionSelector,
@@ -22,6 +29,9 @@ import {buttonOpenPopupEditProfile,
         cardsContainerSelector,
         cardTemplateSelector,
         popupFullCardImageSelector,
+        popupEditProfileSelector,
+        popupAddNewCardSelector,
+        popupEditAvatarSelector,
       } from '../utils/constants.js'
 import { checkReject } from '../utils/utils.js'
 
@@ -42,6 +52,12 @@ import PopupWithForm from '../components/PopupWithForm.js';
 let userId = null;
 
 const api = new Api(config);
+
+//валидация форм
+function setValidation (formElement) {
+  const formValidator = new FormValidator(validSettings, formElement);
+  formValidator.enableValidation();
+};
 
 const userInfo = new UserInfo(profileNameSelector, profileDescriptionSelector, profileAvatarSelector);
 
@@ -87,6 +103,7 @@ function renderPage () {
 // попап с фотографией
 const popupWithImage = new PopupWithImage(popupFullCardImageSelector);
 
+// функция создания карточки
 function createCard (data) {
   const card = new Card(
     data,
@@ -103,112 +120,81 @@ function createCard (data) {
   return card;
 };
 
-const popupFormEditProfile = new PopupWithForm(
-  '.popup_type_edit-profile',
+/////////////////////////////////////////////////////////////////
+const popupFormEditProfile = new PopupWithForm( //экземпляр класса для открытия попапа профиля
+  popupEditProfileSelector,
   (inputs) => {
-    runLoading (true, formEditProfile);
+    popupFormEditProfile.runLoading (true);
   api
     .editProfile(inputs.inputUserName, inputs.inputDescription)
     .then((data) => {
       userInfo.setUserInfo(data); //метод класса userInfo
-      popupFormEditProfile.close();
+      popupFormEditProfile.closePopup();
     })
     .catch(checkReject)
     .finally(() => {
-      runLoading (false, formEditProfile);
+      popupFormEditProfile.runLoading (false);
     });
 });
 
-function openPopupEditProfile(evt) {
-  evt.preventDefault();
+function openPopupEditProfile() {
   setProfileFormInputValues();
-  validateInputs([inputUserName, inputDescription], selectorsAndClasses);
-  openPopup(popupEditProfile);
-};
-
-function openPopupAddNewCard(evt) {
-  evt.preventDefault();
-  validateInputs([inputNameFormAddNewCard, inputLinkFormAddNewCard], selectorsAndClasses);
-  openPopup(popupAddNewCard);
-};
-
-function openPopupEditAvatar(evt) {
-  evt.preventDefault();
-  validateInputs([inputLinkFormEditAvatar], selectorsAndClasses);
-  openPopup(popupEditAvatar);
-}
-
-function runLoading (isLoading, form) {
-  const button = form.querySelector('.form__submit-button');
-  const spinner = form.querySelector('.form__spinner');
-  if (isLoading) {
-    button.textContent = spinner.textContent;
-  } else {
-    button.textContent = button.value;
-  }
-};
-
-function handleFormEditProfile(evt) {
-  evt.preventDefault();
-  runLoading (true, formEditProfile);
-  api.editProfile({
-    name: inputUserName.value,
-    about: inputDescription.value,
-  })
-  .then((data) => {
-    profileName.textContent = data.name;
-    profileDescription.textContent = data.about;
-    closePopups(evt);
-  })
-  .catch(checkReject)
-  .finally(() => {
-    runLoading (false, formEditProfile);
-  })
-};
-
-function handleFormEditAvatar(evt) {
-  evt.preventDefault();
-  runLoading (true, formEditAvatar);
-  api.editAvatar({
-    avatar: inputLinkFormEditAvatar.value,
-  })
-  .then((data) => {
-    profileAvatar.style.backgroundImage = `url("${data.avatar}")`;
-    formEditAvatar.reset();
-    closePopups(evt);
-  })
-  .catch(checkReject)
-  .finally(() => {
-    runLoading (false, formEditAvatar);
-  })
-
-};
-
-function handleFormAddNewCard(evt) {
-  evt.preventDefault();
-  runLoading (true, formAddNewCard);
-  api.postNewCard({
-    name: inputNameFormAddNewCard.value,
-    link: inputLinkFormAddNewCard.value,
-  })
-  .then((data) => {
-    renderNewCard(data, userId);
-    formAddNewCard.reset();
-    closePopups(evt);
-  })
-  .catch(checkReject)
-  .finally(() => {
-    runLoading (false, formAddNewCard);
-  })
+  setValidation (formEditProfile);
+  popupFormEditProfile.openPopup();
 };
 
 buttonOpenPopupEditProfile.addEventListener('click', openPopupEditProfile);
-buttonOpenPopupAddNewCard.addEventListener('click', openPopupAddNewCard);
-buttonOpenPopupEditAvatar.addEventListener('click', openPopupEditAvatar);
+popupFormEditProfile.setEventListeners();
+///////////////////////////////////////////////////////////////////////
+const popupAddNewCard = new PopupWithForm( //экземпляр класса для открытия попапа добавления карточки
+popupAddNewCardSelector,
+  (inputs) => {
+    popupAddNewCard.runLoading (true);
+  api
+    .postNewCard(inputs.inputNameFormAddNewCard, inputs.inputLinkFormAddNewCard)
+    .then((data) => {
+      cardList.addItem(data)
+      popupAddNewCard.closePopup();
+    })
+    .catch(checkReject)
+    .finally(() => {
+      popupAddNewCard.runLoading (false);
+    });
+});
 
-formEditProfile.addEventListener('submit', handleFormEditProfile);
-formAddNewCard.addEventListener('submit', handleFormAddNewCard);
-formEditAvatar.addEventListener('submit', handleFormEditAvatar);
+function openPopupAddNewCard() {
+  setValidation (formAddNewCard);
+  popupAddNewCard.openPopup();
+};
+
+buttonOpenPopupAddNewCard.addEventListener('click', openPopupAddNewCard);
+popupAddNewCard.setEventListeners();
+
+////////////////////////////////////////////////////////////
+const popupFormEditAvatar = new PopupWithForm( //экземпляр класса для открытия попапа аватара
+  popupEditAvatarSelector,
+  (inputs) => {
+    popupFormEditAvatar.runLoading (true);
+  api
+    .editAvatar(inputs.inputLinkFormEditAvatar)
+    .then((data) => {
+      userInfo.setUserInfo(data); //метод класса userInfo
+      popupFormEditAvatar.closePopup();
+    })
+    .catch(checkReject)
+    .finally(() => {
+      popupFormEditAvatar.runLoading (false);
+    });
+});
+
+function openPopupEditAvatar() {
+  setValidation (formEditAvatar);
+  popupFormEditAvatar.openPopup();
+};
+
+buttonOpenPopupEditAvatar.addEventListener('click', openPopupEditAvatar);
+popupFormEditAvatar.setEventListeners();
+////////////////////////////////////////////////////////////////////////////
 
 enableValidation(selectorsAndClasses);
 renderPage();

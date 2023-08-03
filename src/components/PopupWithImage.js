@@ -13,8 +13,4 @@ export default class PopupWithImage extends Popup {
     this._popupImage.alt = data.name;
     this._popupImageTitle.textContent = data.name;
   }
-}
-///////////////////////////////////////////////////////////
-// создание экземпляяра классса PopupWithImage  в index.js
-
-/* const popupWithImage = new PopupWithImage('.popup_type_full-image'); */
+};
