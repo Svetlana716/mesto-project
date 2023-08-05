@@ -7,18 +7,12 @@ import {//кнопки открытия попапов
         formEditProfile,
         formAddNewCard,
         formEditAvatar,
-        //попапы
-        popupEditProfile,
-        popupAddNewCard,
-        popupEditAvatar,
         //инпуты
         inputUserName,
         inputDescription,
-
-        inputNameFormAddNewCard,
+        /* inputNameFormAddNewCard,
         inputLinkFormAddNewCard,
-
-        inputLinkFormEditAvatar,
+        inputLinkFormEditAvatar, */
         //
         selectorsAndClasses,//для валидации
         config,//для фетч запросов
@@ -33,6 +27,8 @@ import {//кнопки открытия попапов
         popupAddNewCardSelector,
         popupEditAvatarSelector,
       } from '../utils/constants.js'
+
+
 import { checkReject } from '../utils/utils.js'
 
 import Api from '../components/Api.js';
@@ -55,11 +51,11 @@ const api = new Api(config);
 
 //валидация форм
 function setValidation (formElement) {
-  const formValidator = new FormValidator(validSettings, formElement);
+  const formValidator = new FormValidator(selectorsAndClasses, formElement);
   formValidator.enableValidation();
 };
 
-const userInfo = new UserInfo(profileNameSelector, profileDescriptionSelector, profileAvatarSelector);
+const userInfo = new UserInfo({profileNameSelector, profileDescriptionSelector, profileAvatarSelector});
 
 function setProfileFormInputValues() { //функция для заполнения инпутов при открытии формы редактирования профиля
   const userData = userInfo.getUserInfo();
@@ -68,25 +64,16 @@ function setProfileFormInputValues() { //функция для заполнен�
   inputDescription.value = userData.about;
 };
 
-function setUserInfo (data) { // добавляет новые данные пользователя на страницу
-  const userData = userInfo.setUserInfo(data); //метод экземпляра класса UserInfo для обновления информации о профиле
-
-  profileName.textContent = userData.name;
-  profileDescription.textContent = userData.about;
-  profileAvatar.style.backgroundImage = `url("${userData.avatar}")`;
-};
-
 const cardList = new Section({
-  initialArray: cardsData,
   renderer: (cardItem) => {
     const card = createCard(cardItem);
     const cardElement = card.generate();
     return cardElement;
+  }
   },
-  cardsContainerSelector
-});
+  cardsContainerSelector);
 
-// рендер страницы (отрисовка информации о пользователе и карточек)
+// рендeр страницы (отрисовка информации о пользователе и карточек)
 
 function renderPage () {
   const profile = api.getUserInfo();  //получение информации о пользователе с сервера
@@ -94,8 +81,9 @@ function renderPage () {
   Promise.all([profile, cards]) // будет выполнен, когда будут выполнены промисы [profile, cards]
   .then((data) => {
     const [profileData, cardsData] = data;
-    setUserInfo(profileData); // вызов функции setUserInfo см. выше
-    cardList.renderItems(cardsData);  //метод экземпляра класса Section
+    userId = profileData._id;
+    userInfo.setUserInfo(profileData) // вызов функции setUserInfo см. выше
+    cardList.renderItems(cardsData)  //метод экземпляра класса Section
   })
   .catch(checkReject)
 };
@@ -107,7 +95,7 @@ const popupWithImage = new PopupWithImage(popupFullCardImageSelector);
 function createCard (data) {
   const card = new Card(
     data,
-    userInfo.userId, // из класса информация о пользователе
+    userInfo._userId, // из класса информация о пользователе
     cardTemplateSelector, {
     handleCardClick: data => popupWithImage.openPopup(data.name, data.link), // метод из класса PopupWithImage
     handleCardDelete: () => {
@@ -119,6 +107,15 @@ function createCard (data) {
   });
   return card;
 };
+//это я пытаюсь вынести логику постановки и снятия лайка в отдельную функцию
+
+/* function handleLike()  {
+  if (this._cardLikeButton.classList.contains('card__like-counter_active')) {
+    this._handleDeleteLike(this._cardId);
+  } else {
+    this._handleAddLike(this._cardId);
+  }
+}; */
 
 /////////////////////////////////////////////////////////////////
 const popupFormEditProfile = new PopupWithForm( //экземпляр класса для открытия попапа профиля
@@ -196,5 +193,5 @@ buttonOpenPopupEditAvatar.addEventListener('click', openPopupEditAvatar);
 popupFormEditAvatar.setEventListeners();
 ////////////////////////////////////////////////////////////////////////////
 
-enableValidation(selectorsAndClasses);
+/* enableValidation(selectorsAndClasses);*/
 renderPage();

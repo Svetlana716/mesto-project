@@ -1,16 +1,18 @@
+//кнопки открытия попапов
 export const buttonOpenPopupEditProfile = document.querySelector('.profile__edit-profile-button');
+export const buttonOpenPopupAddNewCard = document.querySelector('.profile__add-card-button');
+export const buttonOpenPopupEditAvatar = document.querySelector('.profile__edit-avatar-button');
+//формы
 export const formEditProfile = document.querySelector('.form_type_edit-profile');
+export const formAddNewCard = document.querySelector('.form_type_add-new-card');
+export const formEditAvatar = document.querySelector('.form_type_edit-avatar');
+//инпуты
 export const inputUserName = formEditProfile.querySelector('.form__input_el_user-name');
 export const inputDescription = formEditProfile.querySelector('.form__input_el_description');
-export const buttonOpenPopupAddNewCard = document.querySelector('.profile__add-card-button');
-export const formAddNewCard = document.querySelector('.form_type_add-new-card');
-export const inputNameFormAddNewCard = formAddNewCard.querySelector('.form__input_el_place-name');
+
+/* export const inputNameFormAddNewCard = formAddNewCard.querySelector('.form__input_el_place-name');
 export const inputLinkFormAddNewCard = formAddNewCard.querySelector('.form__input_el_image-URL');
-export const buttonOpenPopupEditAvatar = document.querySelector('.profile__edit-avatar-button');
-export const formEditAvatar = document.querySelector('.form_type_edit-avatar');
-export const inputLinkFormEditAvatar = formEditAvatar.querySelector('.form__input_el_avatar-URL');
-export const popupImage = document.querySelector('.popup__image');
-export const popupImageTitle = document.querySelector('.popup__image-title');
+export const inputLinkFormEditAvatar = formEditAvatar.querySelector('.form__input_el_avatar-URL'); */
 
 //селекторы
 export const profileNameSelector = '.profile__user-name';

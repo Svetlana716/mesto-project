@@ -20,7 +20,7 @@ export default class Card {
 
   _getCard() {
     const cardElement = document
-      .querySelector(this._selector)
+      .querySelector(this._cardSelector)
       .content.querySelector(".card")
       .cloneNode(true);
     return cardElement;
@@ -29,7 +29,7 @@ export default class Card {
   //проверяем, есть ли мой лайк на карточке
   _likeCard() {
     this._isLiked = this._cardLikes.some((like) => {
-      return like._id === this._userId; //добавил return, чтобы вернуло результат
+      return like._id === this._userId;
     });
     this._cardLikesCounter.textContent = this._cardLikes.length;
     if (this._isLiked) {
@@ -85,9 +85,9 @@ export default class Card {
     this._cardLikeButton = this._card.querySelector(".card__like-button");
     this._cardDeleteButton = this._card.querySelector(".card__delete-button");
     this._cardLikesCounter = this._card.querySelector(".card__like-counter");
-    this._cardImage.src = this._link;
-    this._cardImage.alt = this._name;
-    this._cardTitle.textContent = this._name;
+    this._cardImage.src = this._cardLink;
+    this._cardImage.alt = this._cardName;
+    this._cardTitle.textContent = this._cardName;
     this._cardLikesCounter.textContent = this._cardLikes.length;
     this._addDeleteIcon(); //проверяем мы создали карточку или нет для урны
     this._addLikeCounter(); //проверяем стоят ли лайки у карточки для счетчика
@@ -95,23 +95,4 @@ export default class Card {
     this._setEventListeners();
     return this._card;
   }
-}
-
-///////////////////////////////////////////////////////////////
-// создание экземпляяра классса card  в index.js
-
-/* function createCard (data) {
-  const card = new Card(
-    data,
-    userInfo.userId, // из класса информация о пользователе
-    '#card', {
-    handleCardClick: data => popupWithImage.openPopup(data), // метод из класса PopupWithImage
-    handleCardDelete: () => {
-      card.deleteCards();
-      api.deleteCard(data._id);
-    },
-    handleAddLike: () => api.likeCard(data._id),
-    handleDeleteLike: () => api.disLikeCard(data._id)
-  });
-  return card;
-}; */
+};

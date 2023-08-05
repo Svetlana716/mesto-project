@@ -16,15 +16,15 @@ export default class Api {
   }
 
   getUserInfo() {
-    return _request(users/me, { headers: this._headers });
+    return this._request(`users/me`, { headers: this._headers });
   }
 
   getInitialCards() {
-    return _request(cards, { headers: this._headers });
+    return this._request(`cards`, { headers: this._headers });
   }
 
   editProfile(name, about) {
-    return _request(users/me, {
+    return this._request(`users/me`, {
       method: "PATCH",
       body: JSON.stringify(name, about),
       headers: this._headers,
@@ -32,7 +32,7 @@ export default class Api {
   }
 
   editAvatar(avatar) {
-    return _request(users/me/avatar, {
+    return this._request(`users/me/avatar`, {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify(avatar),
@@ -40,7 +40,7 @@ export default class Api {
   }
 
   postNewCard(name, link) {
-    return _request(cards, {
+    return this._request(`cards`, {
       method: "POST",
       headers: this._headers,
       body: JSON.stringify(name, link),
@@ -48,21 +48,21 @@ export default class Api {
   }
 
   deleteCard(cardId) {
-    return _request(cards/`${cardId}`, {
+    return this._request(`cards/${cardId}`, {
       method: "DELETE",
       headers: this._headers,
     });
   }
 
   likeCard(cardId) {
-    return _request(cards/likes/`${cardId}`, {
+    return this._request(`cards/likes/${cardId}`, {
       method: "PUT",
       headers: this._headers,
     });
   }
 
   disLikeCard(cardId) {
-  return _request(cards/likes/`${cardId}`, {
+  return this._request(`cards/likes/${cardId}`, {
     method: "DELETE",
     headers: this._headers,
   });
