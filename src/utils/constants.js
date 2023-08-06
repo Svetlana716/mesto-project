@@ -10,10 +10,6 @@ export const formEditAvatar = document.querySelector('.form_type_edit-avatar');
 export const inputUserName = formEditProfile.querySelector('.form__input_el_user-name');
 export const inputDescription = formEditProfile.querySelector('.form__input_el_description');
 
-/* export const inputNameFormAddNewCard = formAddNewCard.querySelector('.form__input_el_place-name');
-export const inputLinkFormAddNewCard = formAddNewCard.querySelector('.form__input_el_image-URL');
-export const inputLinkFormEditAvatar = formEditAvatar.querySelector('.form__input_el_avatar-URL'); */
-
 //селекторы
 export const profileNameSelector = '.profile__user-name';
 export const profileDescriptionSelector = '.profile__description';

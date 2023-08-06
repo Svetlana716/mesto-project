@@ -83,8 +83,7 @@ const cardList = new Section(
         userInfo._userId, // из класса информация о пользователе
         cardTemplateSelector,
         {
-          handleCardClick: (data) =>
-            popupWithImage.openPopup(data.name, data.link), // метод из класса PopupWithImage
+          handleCardClick: () => handleCardClick(data), // метод из класса PopupWithImage
           handleCardDelete: () => {
             card.deleteCards();
             api.deleteCard(data._id);
@@ -100,7 +99,6 @@ const cardList = new Section(
 );
 
 // рендeр страницы (отрисовка информации о пользователе и карточек)
-
 function renderPage() {
   const profile = api.getUserInfo(); //получение информации о пользователе с сервера
   const cards = api.getInitialCards(); // получение изначальных(дабавленных раннее) карточек с сервера
@@ -112,7 +110,7 @@ function renderPage() {
       cardList.renderItems(cardsData); //метод экземпляра класса Section
     })
     .catch(checkReject);
-}
+};
 
 //функция лайка карточки
 function handleCardLike(card, data) {
@@ -124,7 +122,14 @@ function handleCardLike(card, data) {
       card.likeCard(data);
     })
     .catch(checkReject);
-}
+};
+
+//функция открытия попапа картинки
+function handleCardClick(data) {
+  popupWithImage.openPopup(data)
+};
+
+popupWithImage.setEventListeners();
 
 /////////////////////////////////////////////////////////////////
 const popupFormEditProfile = new PopupWithForm( //экземпляр класса для открытия попапа профиля
