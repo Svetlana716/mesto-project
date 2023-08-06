@@ -153,7 +153,8 @@ function openPopupEditProfile() {
 buttonOpenPopupEditProfile.addEventListener("click", openPopupEditProfile);
 popupFormEditProfile.setEventListeners();
 ///////////////////////////////////////////////////////////////////////
-const popupAddNewCard = new PopupWithForm(popupAddNewCardSelector, (inputs) => { //экземпляр класса для открытия попапа добавления карточки
+const popupAddNewCard = new PopupWithForm(popupAddNewCardSelector, (inputs) => {
+  //экземпляр класса для открытия попапа добавления карточки
   popupAddNewCard.runLoading(true);
   api
     .postNewCard(inputs.inputNameFormAddNewCard, inputs.inputLinkFormAddNewCard)
@@ -201,6 +202,23 @@ function openPopupEditAvatar() {
 buttonOpenPopupEditAvatar.addEventListener("click", openPopupEditAvatar);
 popupFormEditAvatar.setEventListeners();
 ////////////////////////////////////////////////////////////////////////////
-
-/* enableValidation(selectorsAndClasses);*/
 renderPage();
+//_______________________________валидация форм_______________________
+
+const formEditProfileValidator = new FormValidator(
+  { selectorsAndClasses },
+  formEditProfile
+);
+
+const formEditAvatarValidator = new FormValidator(
+  { selectorsAndClasses },
+  formEditAvatar
+);
+
+const formAddNewCardValidator = new FormValidator(
+  { selectorsAndClasses },
+  formAddNewCard
+);
+formAddNewCardValidator.enableValidation();
+formEditProfileValidator.enableValidation();
+formEditAvatarValidator.enableValidation();
