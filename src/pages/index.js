@@ -176,13 +176,13 @@ function openPopupAddNewCard() {
 buttonOpenPopupAddNewCard.addEventListener("click", openPopupAddNewCard);
 popupAddNewCard.setEventListeners();
 
-////////////////////////////////////////////////////////////
+/////////////////////ГОТОВО///////////////////////
 const popupFormEditAvatar = new PopupWithForm( //экземпляр класса для открытия попапа аватара
   popupEditAvatarSelector,
   (inputs) => {
     popupFormEditAvatar.runLoading(true);
     api
-      .editAvatar(inputs.inputLinkFormEditAvatar)
+      .editAvatar(inputs)
       .then((data) => {
         userInfo.setUserInfo(data); //метод класса userInfo
         popupFormEditAvatar.closePopup();
@@ -202,7 +202,7 @@ function openPopupEditAvatar() {
 buttonOpenPopupEditAvatar.addEventListener("click", openPopupEditAvatar);
 popupFormEditAvatar.setEventListeners();
 ////////////////////////////////////////////////////////////////////////////
-renderPage();
+
 //_______________________________валидация форм_______________________
 
 const formEditProfileValidator = new FormValidator(
@@ -222,3 +222,4 @@ const formAddNewCardValidator = new FormValidator(
 formAddNewCardValidator.enableValidation();
 formEditProfileValidator.enableValidation();
 formEditAvatarValidator.enableValidation();
+renderPage();
