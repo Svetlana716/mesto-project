@@ -1,5 +1,3 @@
-//поверка....
-
 import "./index.css";
 import {
   //кнопки открытия попапов
@@ -13,12 +11,6 @@ import {
   //инпуты
   inputUserName,
   inputDescription,
-  /* inputNameFormAddNewCard,
-        inputLinkFormAddNewCard,
-        inputLinkFormEditAvatar, */
-  //
-  selectorsAndClasses, //для валидации
-  config, //для фетч запросов
   //selectors
   profileNameSelector,
   profileDescriptionSelector,
@@ -29,6 +21,9 @@ import {
   popupEditProfileSelector,
   popupAddNewCardSelector,
   popupEditAvatarSelector,
+
+  selectorsAndClasses, //для валидации
+  config, //для фетч запросов
 } from "../utils/constants.js";
 
 import { checkReject } from "../utils/utils.js";
@@ -50,44 +45,27 @@ import PopupWithForm from "../components/PopupWithForm.js";
 let userId = null;
 
 const api = new Api(config);
-/*
-//валидация форм
-function setValidation (formElement) {
-  const formValidator = new FormValidator(selectorsAndClasses, formElement);
-  formValidator.enableValidation();
-};*/
 
-//информация о пользователе
+//экземпляр класса информации о пользователе
 const userInfo = new UserInfo({
   profileNameSelector,
   profileDescriptionSelector,
   profileAvatarSelector,
 });
 
-// попап с фотографией
+//экземпляр класса попапа с фотографией
 const popupWithImage = new PopupWithImage(popupFullCardImageSelector);
 
-function setProfileFormInputValues() {
-  //функция для заполнения инпутов при открытии формы редактирования профиля
-  const userData = userInfo.getUserInfo();
-
-  inputUserName.value = userData.name;
-  inputDescription.value = userData.about;
-}
-
-const cardList = new Section(
+const cardList = new Section( //экземпляр класса секции
   {
     renderer: (data) => {
-      const card = new Card(
+      const card = new Card( //экземпляр класса карточки
         data,
         userInfo._userId, // из класса информация о пользователе
         cardTemplateSelector,
         {
-          handleCardClick: () => handleCardClick(data), // метод из класса PopupWithImage
-          handleCardDelete: () => {
-            card.deleteCards();
-            api.deleteCard(data._id);
-          },
+          handleCardClick: () => handleCardClick(data),
+          handleCardDelete: () => handleCardDelete(card, data),
           handleCardLike: () => handleCardLike(card, data),
         }
       );
@@ -110,7 +88,15 @@ function renderPage() {
       cardList.renderItems(cardsData); //метод экземпляра класса Section
     })
     .catch(checkReject);
-}
+};
+
+//функция для заполнения инпутов при открытии формы редактирования профиля
+function setProfileFormInputValues() {
+  const userData = userInfo.getUserInfo();
+
+  inputUserName.value = userData.name;
+  inputDescription.value = userData.about;
+};
 
 //функция лайка карточки
 function handleCardLike(card, data) {
@@ -122,17 +108,24 @@ function handleCardLike(card, data) {
       card.likeCard(data);
     })
     .catch(checkReject);
-}
+};
 
 //функция открытия попапа картинки
 function handleCardClick(data) {
   popupWithImage.openPopup(data);
-}
+};
 
-popupWithImage.setEventListeners();
+//функция удаления карточки
+function handleCardDelete(card, data) {
+  api.deleteCard(data._id)
+  .then((data) => {
+    card.deleteCards(data);
+  })
+  .catch(checkReject);
+};
 
-/////////////////////////////////////////////////////////////////
-const popupFormEditProfile = new PopupWithForm( //экземпляр класса для открытия попапа профиля
+//экземпляр класса для открытия попапа профиля
+const popupFormEditProfile = new PopupWithForm(
   popupEditProfileSelector,
   (inputs) => {
     popupFormEditProfile.runLoading(true);
@@ -149,20 +142,13 @@ const popupFormEditProfile = new PopupWithForm( //экземпляр класс�
   }
 );
 
-function openPopupEditProfile() {
-  setProfileFormInputValues();
-  //setValidation (formEditProfile);
-  popupFormEditProfile.openPopup();
-}
-
-buttonOpenPopupEditProfile.addEventListener("click", openPopupEditProfile);
-popupFormEditProfile.setEventListeners();
-///////////////////////////////////////////////////////////////////////
-const popupAddNewCard = new PopupWithForm(popupAddNewCardSelector, (inputs) => {
-  //экземпляр класса для открытия попапа добавления карточки
+//экземпляр класса для открытия попапа добавления карточки
+const popupAddNewCard = new PopupWithForm(
+  popupAddNewCardSelector,
+  (inputs) => {
   popupAddNewCard.runLoading(true);
   api
-    .postNewCard(inputs.inputNameFormAddNewCard, inputs.inputLinkFormAddNewCard)
+    .postNewCard(inputs)
     .then((data) => {
       cardList.addItem(data);
       popupAddNewCard.closePopup();
@@ -171,18 +157,11 @@ const popupAddNewCard = new PopupWithForm(popupAddNewCardSelector, (inputs) => {
     .finally(() => {
       popupAddNewCard.runLoading(false);
     });
-});
-
-function openPopupAddNewCard() {
-  //setValidation (formAddNewCard);
-  popupAddNewCard.openPopup();
 }
+);
 
-buttonOpenPopupAddNewCard.addEventListener("click", openPopupAddNewCard);
-popupAddNewCard.setEventListeners();
-
-/////////////////////ГОТОВО///////////////////////
-const popupFormEditAvatar = new PopupWithForm( //экземпляр класса для открытия попапа аватара
+//экземпляр класса для открытия попапа аватара
+const popupFormEditAvatar = new PopupWithForm(
   popupEditAvatarSelector,
   (inputs) => {
     popupFormEditAvatar.runLoading(true);
@@ -199,15 +178,27 @@ const popupFormEditAvatar = new PopupWithForm( //экземпляр класса
   }
 );
 
+function openPopupEditProfile() {
+  setProfileFormInputValues();
+  popupFormEditProfile.openPopup();
+};
+
+function openPopupAddNewCard() {
+  popupAddNewCard.openPopup();
+};
+
 function openPopupEditAvatar() {
-  //setValidation (formEditAvatar);
   popupFormEditAvatar.openPopup();
 }
 
+buttonOpenPopupEditProfile.addEventListener("click", openPopupEditProfile);
+buttonOpenPopupAddNewCard.addEventListener("click", openPopupAddNewCard);
 buttonOpenPopupEditAvatar.addEventListener("click", openPopupEditAvatar);
-popupFormEditAvatar.setEventListeners();
-////////////////////////////////////////////////////////////////////////////
 
+popupWithImage.setEventListeners();
+popupFormEditProfile.setEventListeners();
+popupAddNewCard.setEventListeners();
+popupFormEditAvatar.setEventListeners();
 //_______________________________валидация форм_______________________
 
 const formEditProfileValidator = new FormValidator(
@@ -224,7 +215,9 @@ const formAddNewCardValidator = new FormValidator(
   { selectorsAndClasses },
   formAddNewCard
 );
+
 formAddNewCardValidator.enableValidation();
 formEditProfileValidator.enableValidation();
 formEditAvatarValidator.enableValidation();
+
 renderPage();

@@ -3,7 +3,7 @@ export default class Card {
     data,
     userId,
     cardSelector,
-    {handleCardClick, handleDeleteCards, handleCardLike}
+    {handleCardClick, handleCardDelete, handleCardLike}
   ) {
     this._cardName = data.name;
     this._cardLink = data.link;
@@ -13,7 +13,7 @@ export default class Card {
     this._userId = userId;
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick; //колбэк слушателя клика по карточке
-    this._handleDeleteCards = handleDeleteCards; //колбэк слушателя клика урны
+    this._handleCardDelete = handleCardDelete; //колбэк слушателя клика урны
     this._handleCardLike = handleCardLike; //колбэк слушателя добавления и удаления лайка
   }
 
@@ -80,7 +80,7 @@ export default class Card {
     });
     //слушатель корзины для удаления карточки
     this._cardDeleteButton.addEventListener("click", () => {
-    this._handleDeleteCards(this._cardId)
+    this._handleCardDelete()
     });
     // открытие попапа большого изображения
     this._cardImage.addEventListener("click", () => {
