@@ -110,7 +110,7 @@ function renderPage() {
       cardList.renderItems(cardsData); //метод экземпляра класса Section
     })
     .catch(checkReject);
-};
+}
 
 //функция лайка карточки
 function handleCardLike(card, data) {
@@ -122,12 +122,12 @@ function handleCardLike(card, data) {
       card.likeCard(data);
     })
     .catch(checkReject);
-};
+}
 
 //функция открытия попапа картинки
 function handleCardClick(data) {
-  popupWithImage.openPopup(data)
-};
+  popupWithImage.openPopup(data);
+}
 
 popupWithImage.setEventListeners();
 
@@ -137,7 +137,7 @@ const popupFormEditProfile = new PopupWithForm( //экземпляр класс�
   (inputs) => {
     popupFormEditProfile.runLoading(true);
     api
-      .editProfile(inputs.inputUserName, inputs.inputDescription)
+      .editProfile(inputs)
       .then((data) => {
         userInfo.setUserInfo(data); //метод класса userInfo
         popupFormEditProfile.closePopup();
