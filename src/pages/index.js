@@ -1,3 +1,5 @@
+//поверка....
+
 import './index.css';
 import {//кнопки открытия попапов
         buttonOpenPopupEditProfile,
@@ -55,7 +57,11 @@ function setValidation (formElement) {
   formValidator.enableValidation();
 };
 
+//информация о пользователе
 const userInfo = new UserInfo({profileNameSelector, profileDescriptionSelector, profileAvatarSelector});
+
+// попап с фотографией
+const popupWithImage = new PopupWithImage(popupFullCardImageSelector);
 
 function setProfileFormInputValues() { //функция для заполнения инпутов при открытии формы редактирования профиля
   const userData = userInfo.getUserInfo();
@@ -65,8 +71,18 @@ function setProfileFormInputValues() { //функция для заполнен�
 };
 
 const cardList = new Section({
-  renderer: (cardItem) => {
-    const card = createCard(cardItem);
+  renderer: (data) => {
+    const card = new Card(
+      data,
+      userInfo._userId, // из класса информация о пользователе
+      cardTemplateSelector, {
+      handleCardClick: data => popupWithImage.openPopup(data.name, data.link), // метод из класса PopupWithImage
+      handleCardDelete: () => {
+        card.deleteCards();
+        api.deleteCard(data._id);
+      },
+      handleCardLike: () => handleCardLike(card, data),
+    });
     const cardElement = card.generate();
     return cardElement;
   }
@@ -88,34 +104,17 @@ function renderPage () {
   .catch(checkReject)
 };
 
-// попап с фотографией
-const popupWithImage = new PopupWithImage(popupFullCardImageSelector);
-
-// функция создания карточки
-function createCard (data) {
-  const card = new Card(
-    data,
-    userInfo._userId, // из класса информация о пользователе
-    cardTemplateSelector, {
-    handleCardClick: data => popupWithImage.openPopup(data.name, data.link), // метод из класса PopupWithImage
-    handleCardDelete: () => {
-      card.deleteCards();
-      api.deleteCard(data._id);
-    },
-    handleAddLike: () => api.likeCard(data._id),
-    handleDeleteLike: () => api.disLikeCard(data._id)
-  });
-  return card;
-};
-//это я пытаюсь вынести логику постановки и снятия лайка в отдельную функцию
-
-/* function handleLike()  {
-  if (this._cardLikeButton.classList.contains('card__like-counter_active')) {
-    this._handleDeleteLike(this._cardId);
-  } else {
-    this._handleAddLike(this._cardId);
-  }
-}; */
+//функция лайка карточки
+function handleCardLike (card, data)  {
+  const promise = card.isCardLiked()
+    ? api.disLikeCard(data._id)
+    : api.likeCard(data._id)
+    promise
+    .then ((data) => {
+      card.likeCard(data);
+    })
+    .catch(checkReject)
+  };
 
 /////////////////////////////////////////////////////////////////
 const popupFormEditProfile = new PopupWithForm( //экземпляр класса для открытия попапа профиля

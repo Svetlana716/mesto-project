@@ -3,7 +3,7 @@ export default class Card {
     data,
     userId,
     cardSelector,
-    {handleCardClick, handleDeleteCards, handleDeleteLike, handleAddLike}
+    {handleCardClick, handleDeleteCards, handleCardLike}
   ) {
     this._cardName = data.name;
     this._cardLink = data.link;
@@ -14,11 +14,10 @@ export default class Card {
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick; //колбэк слушателя клика по карточке
     this._handleDeleteCards = handleDeleteCards; //колбэк слушателя клика урны
-    this._handleDeleteLike = handleDeleteLike; //колбэк слушателя удаления лайка
-    this._handleAddLike = handleAddLike; //колбэк слушателя добавления лайка
+    this._handleCardLike = handleCardLike; //колбэк слушателя добавления и удаления лайка
   }
 
-  _getCard() {
+  _getCard() { // получаем разметку карточки
     const cardElement = document
       .querySelector(this._cardSelector)
       .content.querySelector(".card")
@@ -26,22 +25,9 @@ export default class Card {
     return cardElement;
   }
 
-  //проверяем, есть ли мой лайк на карточке
-  _likeCard() {
-    this._isLiked = this._cardLikes.some((like) => {
-      return like._id === this._userId;
-    });
-    this._cardLikesCounter.textContent = this._cardLikes.length;
-    if (this._isLiked) {
-      this._cardLikeButton.classList.add("card__like-button_active");
-    } else {
-      this._cardLikeButton.classList.remove("card__like-button_active");
-    }
-  }
-
   //проверяем есть ли лайки у карточки хоть чьи-то, чтобы поставить число лайков
-  _addLikeCounter() {
-    if (this._cardLikes.length > 0) {
+  _addLikeCounter(data) {
+    if (data.likes.length > 0) {
       this._cardLikesCounter.classList.add("card__like-counter_active");
     } else {
       this._cardLikesCounter.classList.remove("card__like-counter_active");
@@ -53,20 +39,44 @@ export default class Card {
       this._cardDeleteButton.classList.add("card__delete-button_active");
     }
   }
-  //все ок
-  deleteCards() {
+
+  _addLikeBtnAndCounterState () { //состояние кнопки и счетчика лайка
+    if (this._cardLikes.length > 0) {
+      this._cardLikesCounter.classList.add("card__like-counter_active");
+    }
+    if (this._cardLikes.some(like => like._id === this._userId)) {
+      this._cardLikeButton.classList.add("card__like-button_active");
+      this._isLiked = true;
+    }
+  }
+
+  // публичные методы
+  deleteCards() { // удаление карточки
     this._card.remove();
     this._card = null;
+  }
+
+  isCardLiked () { //метод для проверки лайкнута ли карточка
+    return this._isLiked;
+  }
+
+  likeCard(data) { // метод для функции handleCardLike
+    this._isLiked = data.likes.some((like) => {
+      return like._id === this._userId;
+    });
+    this._cardLikesCounter.textContent = data.likes.length;
+    if (this._isLiked) {
+      this._cardLikeButton.classList.add("card__like-button_active");
+    } else {
+      this._cardLikeButton.classList.remove("card__like-button_active");
+    }
+    this._addLikeCounter(data);
   }
 
   _setEventListeners() {
     //слушатель кнопки лайка
     this._cardLikeButton.addEventListener("click", () => {
-      if (this._cardLikeButton.classList.contains('card__like-counter_active')) {
-        this._handleDeleteLike(this._cardId);
-      } else {
-        this._handleAddLike(this._cardId);
-      }
+      this._handleCardLike()
     });
     //слушатель корзины для удаления карточки
     this._cardDeleteButton.addEventListener("click", () => {
@@ -88,10 +98,10 @@ export default class Card {
     this._cardImage.src = this._cardLink;
     this._cardImage.alt = this._cardName;
     this._cardTitle.textContent = this._cardName;
+    this._card.id = this._cardId;
     this._cardLikesCounter.textContent = this._cardLikes.length;
-    this._addDeleteIcon(); //проверяем мы создали карточку или нет для урны
-    this._addLikeCounter(); //проверяем стоят ли лайки у карточки для счетчика
-    this._likeCard(); // проверяем наш лайк есть или нет для активности лайка
+    this._addDeleteIcon();
+    this._addLikeBtnAndCounterState ();
     this._setEventListeners();
     return this._card;
   }
