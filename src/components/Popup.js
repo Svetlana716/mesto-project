@@ -2,6 +2,7 @@ export default class Popup {
   constructor(popupSelector) {
     this._popup = document.querySelector(popupSelector);
     this._popupCloseButton = this._popup.querySelector('.popup__close-button');//кнопкa закрытия попапа - она нам пригодится в слушателе
+    this._handleEscClose = this._handleEscClose.bind(this);////метод закрытия по ESC с bind вынесли в конструктор
   }
 
   openPopup() {
