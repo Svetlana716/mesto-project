@@ -7,12 +7,12 @@ export default class Popup {
 
   openPopup() {
     this._popup.classList.add('popup_opened');
-    document.addEventListener("keydown", this._handleEscClose.bind(this));// вешаем слушателя ESC на весь документ при открытии попапа
+    document.addEventListener("keydown", this._handleEscClose);// вешаем слушателя ESC на весь документ при открытии попапа
   }
 
   closePopup() {
     this._popup.classList.remove('popup_opened');
-    document.removeEventListener("keydown", this._handleEscClose.bind(this));// снимаем слушателя ESC на весь документ при закрытии попапа
+    document.removeEventListener("keydown", this._handleEscClose);// снимаем слушателя ESC на весь документ при закрытии попапа
   }
 
   _handleEscClose(evt) {//метод закрытия по ESC
