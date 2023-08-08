@@ -2,16 +2,17 @@ export default class Popup {
   constructor(popupSelector) {
     this._popup = document.querySelector(popupSelector);
     this._popupCloseButton = this._popup.querySelector('.popup__close-button');//кнопкa закрытия попапа - она нам пригодится в слушателе
+    this._handleEscClose = this._handleEscClose.bind(this);////метод закрытия по ESC с bind вынесли в конструктор
   }
 
   openPopup() {
     this._popup.classList.add('popup_opened');
-    document.addEventListener("keydown", this._handleEscClose);// вешаем слушателя ESC на весь документ при открытии попапа
+    document.addEventListener("keydown", this._handleEscClose.bind(this));// вешаем слушателя ESC на весь документ при открытии попапа
   }
 
   closePopup() {
     this._popup.classList.remove('popup_opened');
-    document.removeEventListener("keydown", this._handleEscClose);// снимаем слушателя ESC на весь документ при закрытии попапа
+    document.removeEventListener("keydown", this._handleEscClose.bind(this));// снимаем слушателя ESC на весь документ при закрытии попапа
   }
 
   _handleEscClose(evt) {//метод закрытия по ESC
